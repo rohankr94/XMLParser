@@ -9,7 +9,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class getPreparedExp {
+public class GetPreparedExp {
+
     public XQPreparedExpression  newExp(String fileName) throws IOException, XQException {
 
         InputStream inputStream = new FileInputStream(new File("/home/exa00083/xmlToFile/src/main/resources/"+fileName));

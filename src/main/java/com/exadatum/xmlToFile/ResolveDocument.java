@@ -1,14 +1,10 @@
-import java.io.*;
+import net.sf.saxon.s9api.SaxonApiException;
 
 import javax.xml.namespace.QName;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.xquery.*;
-
-import com.saxonica.xqj.SaxonXQDataSource;
-import net.sf.saxon.s9api.*;
-
-import static javax.xml.xquery.XQItemType.XQBASETYPE_STRING;
+import javax.xml.xquery.XQException;
+import javax.xml.xquery.XQPreparedExpression;
+import javax.xml.xquery.XQResultSequence;
+import java.io.*;
 
 public class ResolveDocument {
     public static void main(String[] args) throws IOException, SaxonApiException {
@@ -21,7 +17,7 @@ public class ResolveDocument {
         }
     }
 
-    private static void execute() throws FileNotFoundException, XQException, IOException, SaxonApiException {
+    private static void execute() throws XQException, IOException {
 
         int i;
         String[] qArr = new String[2];
@@ -35,7 +31,7 @@ public class ResolveDocument {
         for(i = 0; i < qArr.length; i++) {
 
             String qFileName = qArr[i];
-            XQPreparedExpression exp = new getPreparedExp().newExp(qFileName);
+            XQPreparedExpression exp = new GetPreparedExp().newExp(qFileName);
 
             String outputdir = new OutDir().outputDir;
             File file = new File(outputdir + oFile[i]);
@@ -49,14 +45,7 @@ public class ResolveDocument {
 
             while ((XMLEntry = br.readLine()) != null) {
 
-                String tempXmlFile = new createTempFile().newFile(XMLEntry);
-
-                FileInputStream replaceDoc = new FileInputStream(tempXmlFile);
-                exp.bindDocument(new QName("doc"), replaceDoc, null, null);
-                replaceDoc.close();
-
-                XQResultSequence result = exp.executeQuery();
-
+                XQResultSequence result =  getResult(XMLEntry, exp);
                 String str = "";
                 while (result.next()) {
                     str = str + '|' + result.getItemAsString(null);
@@ -70,5 +59,14 @@ public class ResolveDocument {
             bWriter.close();
             outFile.close();
         }
+    }
+
+    public static XQResultSequence getResult(String XMLEntry , XQPreparedExpression exp) throws XQException, IOException {
+
+        FileInputStream replaceDoc = new FileInputStream(new CreateTempFile().newFile(XMLEntry));
+        exp.bindDocument(new QName("doc"), replaceDoc, null, null);
+        replaceDoc.close();
+        XQResultSequence result = exp.executeQuery();
+        return result;
     }
 }
