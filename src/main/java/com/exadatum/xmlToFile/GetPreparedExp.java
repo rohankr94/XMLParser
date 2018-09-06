@@ -1,3 +1,5 @@
+package com.exadatum.xmlToFile;
+
 import com.saxonica.xqj.SaxonXQDataSource;
 
 import javax.xml.xquery.XQConnection;

@@ -1,3 +1,5 @@
+package com.exadatum.xmlToFile;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
