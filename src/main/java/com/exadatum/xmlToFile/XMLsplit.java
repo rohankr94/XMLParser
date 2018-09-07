@@ -1,16 +1,18 @@
 package com.exadatum.xmlToFile;
 
-import net.sf.saxon.s9api.SaxonApiException;
+import com.opencsv.CSVWriter;
 
 import javax.xml.namespace.QName;
 import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ResolveDocument {
-    public static void main(String[] args) throws IOException, SaxonApiException {
+public class XMLsplit {
+    public static void main(String[] args) throws IOException {
         try {
             execute(args);
         } catch (FileNotFoundException e) {
@@ -22,31 +24,23 @@ public class ResolveDocument {
 
     private static void execute(String[] args) throws XQException, IOException {
 
-            String ext = ".csv" ;
             String qFileName = args[1];
             XQPreparedExpression exp = new GetPreparedExp().newExp(qFileName);
 
-            String outputdir = new Paths().outputDir;
             String inputdir = new Paths().inputDir;
-
-            File file = new File(outputdir + args[1] + ext);
-            file.getParentFile().mkdirs();
-            FileWriter outFile = new FileWriter(file);
-            BufferedWriter bWriter = new BufferedWriter(outFile);
-
             File f = new File(inputdir + args[0]);
             BufferedReader br = new BufferedReader(new FileReader(f));
             String XMLEntry ;
+            List<Book> recordSet = new ArrayList<>();
 
             while ((XMLEntry = br.readLine()) != null) {
 
-
                 XQResultSequence result =  getResult(XMLEntry, exp);
-                writeToFile(br,bWriter,result);
+                List<String> oneRecord = appendResults(result);
+                recordSet.add(new Book(oneRecord.get(0),oneRecord.get(1),oneRecord.get(2),oneRecord.get(3)));
 
             }
-            bWriter.close();
-            outFile.close();
+            writeToFile(recordSet,qFileName);
         }
 
     public static XQResultSequence getResult(String XMLEntry , XQPreparedExpression exp) throws XQException, IOException {
@@ -58,14 +52,33 @@ public class ResolveDocument {
         return result;
     }
 
-    public static void writeToFile(BufferedReader br , BufferedWriter bWriter , XQResultSequence result) throws XQException, IOException {
+    public static List<String> appendResults(XQResultSequence result) throws XQException {
 
-        String str = "";
+        List<String> oneRecord = new ArrayList<String>();
         while (result.next()) {
-            str = str + '|' + result.getItemAsString(null);
+            oneRecord.add(result.getItemAsString(null));
         }
-        str = str.substring(1, str.length());
-        bWriter.write(str);
-        bWriter.newLine();
+        return oneRecord;
+    }
+
+    public static void writeToFile(List<Book> recordSet, String Qfile) throws IOException {
+
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        String outputdir = new Paths().outputDir;
+        File file = new File(outputdir + Qfile + "_" + ts + ".csv");
+        file.getParentFile().mkdirs();
+        FileWriter outFile = new FileWriter(file);
+
+        CSVWriter csvWriter = new CSVWriter(outFile, ',',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+
+        for(Book B : recordSet){
+            String[] resArr = {B.title,B.author,B.year,B.price};
+            csvWriter.writeNext(resArr);
+        }
+        csvWriter.close();
+
     }
 }
