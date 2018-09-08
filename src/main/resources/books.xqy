@@ -1,3 +1,27 @@
 declare variable $doc external;
+for $x in $doc
 
-($doc/books/book)//text()
+return
+(
+
+if ( exists($doc/books/book/title) )
+then
+( data($doc/books/book/title) )
+else ("") ,
+
+if ( exists($doc/books/book/author) )
+then
+( data($doc/books/book/author) )
+else ("") ,
+
+if ( exists($doc/books/book/year) )
+then
+( data($doc/books/book/year) )
+else ("") ,
+
+if ( exists($doc/books/book/price) )
+then
+( data($doc/books/book/price) )
+else ("")
+
+)
