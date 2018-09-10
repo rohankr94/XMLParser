@@ -1,4 +1,4 @@
-package com.exadatum.xmlToFile;
+package com.exadatum.xml.splitter;
 
 
 public class Book {
@@ -8,7 +8,7 @@ public class Book {
         public String year;
         public String price;
 
-        Book(String title, String author,String year, String price){
+        public Book(String title, String author,String year, String price){
 
                 this.title=title;
                 this.author=author;

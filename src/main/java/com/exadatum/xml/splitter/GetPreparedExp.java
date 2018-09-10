@@ -1,4 +1,4 @@
-package com.exadatum.xmlToFile;
+package com.exadatum.xml.splitter;
 
 import com.saxonica.xqj.SaxonXQDataSource;
 

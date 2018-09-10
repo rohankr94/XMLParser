@@ -1,5 +1,8 @@
-package com.exadatum.xmlToFile;
+package com.exadatum.xml.splitter.utils;
 
+import com.exadatum.xml.splitter.Book;
+import com.exadatum.xml.splitter.CreateTempFile;
+import com.exadatum.xml.splitter.GetPreparedExp;
 import com.opencsv.CSVWriter;
 
 import javax.xml.namespace.QName;

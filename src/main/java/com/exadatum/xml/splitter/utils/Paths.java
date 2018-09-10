@@ -1,4 +1,4 @@
-package com.exadatum.xmlToFile;
+package com.exadatum.xml.splitter.utils;
 
 public class Paths {
 
