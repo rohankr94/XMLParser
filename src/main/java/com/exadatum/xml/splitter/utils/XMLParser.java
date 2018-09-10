@@ -40,10 +40,10 @@ public class XMLParser {
             File f1 = new File(workTimeXml);
             BufferedReader br1 = new BufferedReader(new FileReader(f1));
 
-            WorkScheduleProcessor.ShiftBreakProcess(br,qShiftBreak,outDir);
+           WorkScheduleProcessor.ShiftBreakProcess(br,qShiftBreak,outDir);
             WorkTimeProcessor.StoreLaborEmployeeProcess(br1,qStoreLaborEmployee,outDir);
             WorkScheduleProcessor.ShiftJobProcess(br,qShiftJob,outDir);
-            WorkScheduleProcessor.StroreLaborFacilityProcess(br,qStoreLaborFacility,outDir);
+            //WorkScheduleProcessor.StroreLaborFacilityProcess(br,qStoreLaborFacility,outDir);
         }
 
 
