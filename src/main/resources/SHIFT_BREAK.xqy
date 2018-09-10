@@ -14,19 +14,19 @@ then
 ( data ($doc/SequenceNbr) )
 else ("") ,
 
-if (exists($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakStartTs']))
+if (exists($doc/GetEmployeeWorkSchedule/WorkScheduleData//*[local-name()='WorkSchedule']//*[local-name()='ShiftBreak']//*[local-name()='BreakStartTs']))
 then
-( data ($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakStartTs']) )
+( data ($doc/GetEmployeeWorkSchedule/WorkScheduleData//*[local-name()='WorkSchedule']//*[local-name()='ShiftBreak']//*[local-name()='BreakStartTs']) )
 else ("") ,
 
-if (exists($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakEndTs']))
+if (exists($doc/GetEmployeeWorkSchedule/WorkScheduleData//*[local-name()='WorkSchedule']//*[local-name()='ShiftBreak']//*[local-name()='BreakEndTs']))
 then
-( data($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakEndTs']) )
+( data($doc/GetEmployeeWorkSchedule/WorkScheduleData//*[local-name()='WorkSchedule']//*[local-name()='ShiftBreak']//*[local-name()='BreakEndTs']) )
 else ("") ,
 
-if (exists($doc//GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakType']))
+if (exists($doc//GetEmployeeWorkSchedule/WorkScheduleData//*[local-name()='WorkSchedule']//*[local-name()='ShiftBreak']//*[local-name()='BreakType']))
 then
-( data($doc//GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakType']) )
+( data($doc//GetEmployeeWorkSchedule/WorkScheduleData//*[local-name()='WorkSchedule']//*[local-name()='ShiftBreak']//*[local-name()='BreakType']) )
 else ("") ,
 
 if (exists($doc/DW_BATCH_ID))

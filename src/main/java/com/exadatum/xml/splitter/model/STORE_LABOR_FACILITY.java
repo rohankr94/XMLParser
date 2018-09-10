@@ -443,4 +443,59 @@ public class STORE_LABOR_FACILITY {
     public void setDW_LOGICAL_DELETE_IND(String DW_LOGICAL_DELETE_IND) {
         this.DW_LOGICAL_DELETE_IND = DW_LOGICAL_DELETE_IND;
     }
+
+    @Override
+    public String toString() {
+        return
+                Facility_SK + "," +
+                 FacilityType + "," +
+                FacilityID + "," +
+                 FacilityName + "," +
+                FirstEffectiveDt + "," +
+                LastEffectiveDt + "," +
+                ParentFacilityId + "," +
+                CorpId + "," +
+                 CorpNm + "," +
+                DivisionId + "," +
+                DivisionNm + "," +
+                DistrictId + "," +
+                DistrictNm + "," +
+                ROGId + "," +
+                ROGNm + "," +
+                 OpAreaId + "," +
+                OpAreaNm + "," +
+                FacilitySubTypeCd + "," +
+                AltFacilityId + "," +
+                 FacilityBannerCd + "," +
+                 AddressLine1txt + "," +
+                AddressLine2txt + "," +
+                CityNm + "," +
+                 CountyNm + "," +
+                PostalZoneCd + "," +
+                StateCd + "," +
+                 CountryCd + "," +
+                 LatitudeDegree + "," +
+                 LongitudeDegree + "," +
+                 TimeZoneCd + "," +
+                 PhoneNbr + "," +
+                axNbr + "," +
+                 FacilityOpenDt + "," +
+                 FacilityCloseAnnouncedDt + "," +
+                 FacilityCurrentStatusCd + "," +
+                 TierCompanyCd + "," +
+                 ConversionDt + "," +
+                 ConversionInd + "," +
+                 PayrollUnitCd + "," +
+                 ManagerUserId + "," +
+                 ManagerEmployeeId + "," +
+                 FacilityManagerNm + "," +
+                 AccountingUnitNm + "," +
+                 DW_BATCH_ID + "," +
+                DW_CREATE_TS + "," +
+                 DW_CREATE_USER_ID + "," +
+                DW_LAST_UPDATE_TS + "," +
+                 DW_LAST_UPDATE_USER_ID + "," +
+                DW_LOGICAL_DELETE_IND
+                ;
+    }
 }

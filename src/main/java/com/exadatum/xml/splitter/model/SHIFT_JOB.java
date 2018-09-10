@@ -119,4 +119,22 @@ public class SHIFT_JOB {
     public void setDW_LOGICAL_DELETE_IND(String DW_LOGICAL_DELETE_IND) {
         this.DW_LOGICAL_DELETE_IND = DW_LOGICAL_DELETE_IND;
     }
+
+    @Override
+    public String toString() {
+        return EmployeeWorkSchedule_SK + "," +
+                SegmentStartTs + "," +
+                ShiftJob_id + "," +
+                ShiftJobCd + "," +
+                SegmentId + "," +
+                SegmentEndTs + "," +
+                ShiftJobTitleNm + "," +
+                DW_BATCH_ID + "," +
+                DW_CREATE_TS + "," +
+                DW_CREATE_USER_ID + "," +
+                DW_LAST_UPDATE_TS + "," +
+                DW_LAST_UPDATE_USER_ID + "," +
+                DW_LOGICAL_DELETE_IND
+                ;
+    }
 }
