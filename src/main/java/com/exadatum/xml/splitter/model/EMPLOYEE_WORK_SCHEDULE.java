@@ -232,8 +232,40 @@ public class EMPLOYEE_WORK_SCHEDULE {
     public String getDW_LOGICAL_DELETE_IND() {
         return DW_LOGICAL_DELETE_IND;
     }
-
     public void setDW_LOGICAL_DELETE_IND(String DW_LOGICAL_DELETE_IND) {
         this.DW_LOGICAL_DELETE_IND = DW_LOGICAL_DELETE_IND;
+
+
+    }
+
+    @Override
+    public String toString() {
+        return EmployeeWorkSchedule_SK + "," +
+                Facility_SK + "," +
+                EmployeeId + "," +
+                DeptId + "," +
+               DeptNm + "," +
+                WorkWeekStartDt + "," +
+                WorkWeekStartDay + "," +
+               WorkWeekEndDt + "," +
+                WorkWeekEndDay + "," +
+                WorkDt + "," +
+                WorkDayOfWk + "," +
+                ShiftId + "," +
+                ShiftDt + "," +
+                ShiftStartTs + "," +
+                ShiftEndTs + "," +
+                ShiftDurationHrs + "," +
+                JobCd + "," +
+                JobTitleNm + "," +
+                WageGroupCd + "," +
+                WageType + "," +
+                DW_BATCH_ID + "," +
+                DW_CREATE_TS + "," +
+                DW_CREATE_USER_ID + "," +
+                DW_LAST_UPDATE_TS + "," +
+                DW_LAST_UPDATE_USER_ID + "," +
+               DW_LOGICAL_DELETE_IND
+               ;
     }
 }

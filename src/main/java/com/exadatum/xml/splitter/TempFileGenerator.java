@@ -7,15 +7,14 @@ import java.io.IOException;
 public class TempFileGenerator {
 
     public String newFile(String XMLEntry) throws IOException {
-
-        String str="/home/exa00083/tempXML.xml";
-        File fileT = new File(str);
+        String tempFileLoc="/home/exa00083/tempXML.xml";
+        File fileT = new File(tempFileLoc);
         fileT.createNewFile();
         FileWriter fw = new FileWriter(fileT);
         fw.write(XMLEntry);
         fw.flush();
         fw.close();
-        return str;
+        return tempFileLoc;
 
     }
 }

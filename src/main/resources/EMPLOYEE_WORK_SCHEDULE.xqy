@@ -1,5 +1,5 @@
 declare variable $doc external;
-for $x in doc
+for $x in $doc
 
 return
 (

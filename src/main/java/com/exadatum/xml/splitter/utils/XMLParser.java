@@ -3,7 +3,9 @@ package com.exadatum.xml.splitter.utils;
 import com.exadatum.xml.splitter.TempFileGenerator;
 import com.exadatum.xml.splitter.XQueryExecutor;
 import com.exadatum.xml.splitter.model.SHIFT_BREAK;
+import com.exadatum.xml.splitter.model.STORE_LABOR_FACILITY;
 import com.opencsv.CSVWriter;
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 
 import javax.xml.namespace.QName;
 import javax.xml.xquery.XQException;
@@ -32,18 +34,34 @@ public class XMLParser {
             String qStoreLaborEmployee = args[3];
             String qShiftJob = args[4];
             String qStoreLaborFacility = args[5];
-            String outDir = args[6];
+            String qEmployeeWorkSchedule = args[6];
+            String qEmployeeWorkTime = args[7];
+            String qWorkTimeBreak = args[8];
+            String outDirWorkSchedule = args[9];
+            String outDirWorkTime = args[10];
 
             File f = new File(workScheduleXml);
-            BufferedReader br = new BufferedReader(new FileReader(f));
+            BufferedReader brForWorkSchedule = new BufferedReader(new FileReader(f));
 
             File f1 = new File(workTimeXml);
-            BufferedReader br1 = new BufferedReader(new FileReader(f1));
+            BufferedReader brForWorkTime = new BufferedReader(new FileReader(f1));
 
-           WorkScheduleProcessor.ShiftBreakProcess(br,qShiftBreak,outDir);
-            WorkTimeProcessor.StoreLaborEmployeeProcess(br1,qStoreLaborEmployee,outDir);
-            WorkScheduleProcessor.ShiftJobProcess(br,qShiftJob,outDir);
-            //WorkScheduleProcessor.StroreLaborFacilityProcess(br,qStoreLaborFacility,outDir);
+        String XMLEntry ;
+        while ((XMLEntry = brForWorkSchedule.readLine()) != null) {
+
+            WorkScheduleProcessor.ShiftBreakProcess(XMLEntry,qShiftBreak,outDirWorkSchedule);
+            WorkScheduleProcessor.ShiftJobProcess(XMLEntry,qShiftJob,outDirWorkSchedule);
+            WorkScheduleProcessor.StroreLaborFacilityProcess(XMLEntry,qStoreLaborFacility,outDirWorkSchedule);
+            WorkScheduleProcessor.WorkTimeBreakProcess(XMLEntry,qWorkTimeBreak,outDirWorkSchedule);
+        }
+
+        while ((XMLEntry = brForWorkTime.readLine()) != null) {
+
+            WorkTimeProcessor.StoreLaborEmployeeProcess(XMLEntry,qStoreLaborEmployee,outDirWorkTime);
+            WorkTimeProcessor.EmployeeWorkScheduleProcess(XMLEntry,qEmployeeWorkSchedule,outDirWorkTime);
+            WorkTimeProcessor.EmployeeWorkTimeProcess(XMLEntry,qEmployeeWorkTime,outDirWorkTime);
+        }
+
         }
 
 
@@ -53,6 +71,8 @@ public class XMLParser {
         exp.bindDocument(new QName("doc"), replaceDoc, null, null);
         replaceDoc.close();
         XQResultSequence result = exp.executeQuery();
+        File tempFile = new File("/home/exa00083/tempXML.xml");
+        tempFile.delete();
         return result;
     }
 
@@ -70,11 +90,12 @@ public class XMLParser {
     public static <T> void WriteToFile(List<T> recordSet, String OutDir, String outFileName) throws IOException {
 
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        File file = new File(OutDir + ts + " " + outFileName);
+        File file = new File(OutDir  + " " + outFileName);
         file.getParentFile().mkdirs();
-        FileWriter outFile = new FileWriter(file);
+        FileWriter outFile = new FileWriter(file,true);
+        BufferedWriter bw = new BufferedWriter(outFile);
 
-        CSVWriter csvWriter = new CSVWriter(outFile, ',',
+        CSVWriter csvWriter = new CSVWriter(bw, ',',
                 CSVWriter.NO_QUOTE_CHARACTER,
                 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END);
