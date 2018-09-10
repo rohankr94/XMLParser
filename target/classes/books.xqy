@@ -4,24 +4,24 @@ for $x in $doc
 return
 (
 
-if ( exists($doc/books/book/title) )
+if ( exists($doc/books/book//*[local-name()='title']) )
 then
-( data($doc/books/book/title) )
+( data($doc/books/book//*[local-name()='title']) )
 else ("") ,
 
-if ( exists($doc/books/book/[local-name='author']) )
+if ( exists($doc/books/book//*[local-name()='author']) )
 then
-( data($doc/books/book/author) )
+( data($doc/books/book//*[local-name()='author'] ) )
 else ("") ,
 
-if ( exists($doc/books/book/year) )
+if ( exists($doc/books/book//*[local-name()='year']) )
 then
-( data($doc/books/book/year) )
+( data($doc/books/book//*[local-name()='year']) )
 else ("") ,
 
-if ( exists($doc/books/book/price) )
+if ( exists($doc/books/book//*[local-name()='price']) )
 then
-( data($doc/books/book/price) )
+( data($doc/books/book//*[local-name()='price']) )
 else ("")
 
 )

@@ -1,5 +1,5 @@
 declare variable $doc external;
-for $x in $doc
+for $x in doc
 
 return
 (
@@ -9,14 +9,14 @@ then
 ( data($doc/EmployeeWorkSchedule_SK) )
 else ("") ,
 
-if (exists($doc/SequenceNbr))
+if (exists($doc/BreakSeqNbr))
 then
-( data ($doc/SequenceNbr) )
+( data($doc/BreakSeqNbr) )
 else ("") ,
 
 if (exists($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakStartTs']))
 then
-( data ($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakStartTs']) )
+( data($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakStartTs']) )
 else ("") ,
 
 if (exists($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakEndTs']))
@@ -24,39 +24,36 @@ then
 ( data($doc/GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakEndTs']) )
 else ("") ,
 
-if (exists($doc//GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakType']))
-then
-( data($doc//GetEmployeeWorkSchedule/WorkScheduleData/WorkSchedule/ShiftBreak//*[local-name()='BreakType']) )
-else ("") ,
-
 if (exists($doc/DW_BATCH_ID))
 then
-( data ($doc/DW_BATCH_ID) )
+( data($doc/DW_BATCH_ID) )
 else ("") ,
 
 if (exists($doc/DW_CREATE_TS))
 then
-( data ($doc/DW_CREATE_TS) )
+( data($doc/DW_CREATE_TS) )
 else ("") ,
 
 if (exists($doc/DW_CREATE_USER_ID))
 then
-( data ($doc/DW_CREATE_USER_ID) )
+( data($doc/DW_CREATE_USER_ID) )
 else ("") ,
 
 if (exists($doc/DW_LAST_UPDATE_TS))
 then
-( data ($doc/DW_LAST_UPDATE_TS) )
+( data($doc/DW_LAST_UPDATE_TS) )
 else ("") ,
 
 if (exists($doc/DW_LAST_UPDATE_USER_ID))
 then
-( data ($doc/DW_LAST_UPDATE_USER_ID) )
+( data($doc/DW_LAST_UPDATE_USER_ID) )
 else ("") ,
 
 if (exists($doc/DW_LOGICAL_DELETE_IND))
 then
-( data ($doc/DW_LOGICAL_DELETE_IND) )
+( data($doc/DW_LOGICAL_DELETE_IND) )
 else ("")
+
+
 
 )
