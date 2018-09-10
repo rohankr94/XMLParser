@@ -15,6 +15,7 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class XMLParser {
     public static void main(String[] args) throws IOException {
@@ -28,17 +29,22 @@ public class XMLParser {
     }
 
     private static void execute(String[] args) throws XQException, IOException {
-            String workScheduleXml=args[0];
-            String workTimeXml=args[1];
-            String qShiftBreak = args[2];
-            String qStoreLaborEmployee = args[3];
-            String qShiftJob = args[4];
-            String qStoreLaborFacility = args[5];
-            String qEmployeeWorkSchedule = args[6];
-            String qEmployeeWorkTime = args[7];
-            String qWorkTimeBreak = args[8];
-            String outDirWorkSchedule = args[9];
-            String outDirWorkTime = args[10];
+
+            FileReader readProperty = new FileReader(args[0]);
+            Properties getFile = new Properties();
+            getFile.load(readProperty);
+
+            String workScheduleXml=getFile.getProperty("WorkScheduleXml");
+            String workTimeXml=getFile.getProperty("WorkTimeXml");
+            String qShiftBreak = getFile.getProperty("ShiftBreakQueryFile");
+            String qStoreLaborEmployee = getFile.getProperty("StoreLaborEmployeeQueryFile");
+            String qShiftJob = getFile.getProperty("ShiftJobQueryFile");
+            String qStoreLaborFacility = getFile.getProperty("StoreLaborFacilityQueryFile");
+            String qEmployeeWorkSchedule = getFile.getProperty("EmployeeWorkScheduleQueryFile");
+            String qEmployeeWorkTime = getFile.getProperty("EmployeeWorkTimeQueryFile");
+            String qWorkTimeBreak = getFile.getProperty("WorkTimeBreakQueryFile");
+            String outDirWorkSchedule = getFile.getProperty("WorkSchedule");
+            String outDirWorkTime = getFile.getProperty("WorkTime");
 
             File f = new File(workScheduleXml);
             BufferedReader brForWorkSchedule = new BufferedReader(new FileReader(f));
