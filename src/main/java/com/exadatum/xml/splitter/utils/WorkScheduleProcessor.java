@@ -5,11 +5,11 @@ import com.exadatum.xml.splitter.model.SHIFT_BREAK;
 import com.exadatum.xml.splitter.model.SHIFT_JOB;
 import com.exadatum.xml.splitter.model.STORE_LABOR_FACILITY;
 import com.exadatum.xml.splitter.model.WORK_TIME_BREAK;
+import com.exadatum.xml.splitter.parser.XMLParser;
 
 import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class WorkScheduleProcessor {
             sb.setDW_LOGICAL_DELETE_IND(oneRecord.get(10));
             recordSet.add(sb);
 
-        new XMLParser().WriteToFile(recordSet,outDir,"SHIFT_BREAK.csv");
+         XMLParser.WriteToFile(recordSet,outDir,"SHIFT_BREAK.csv");
 
     }
 
@@ -46,8 +46,8 @@ public class WorkScheduleProcessor {
 
             XQPreparedExpression exp = new XQueryExecutor().newExp(qFileName);
             STORE_LABOR_FACILITY slf = new STORE_LABOR_FACILITY();
-            XQResultSequence result =  new XMLParser().getResult(XMLEntry, exp);
-            List<String> oneRecord = new XMLParser().appendResults(result);
+            XQResultSequence result =  XMLParser.getResult(XMLEntry, exp);
+            List<String> oneRecord =  XMLParser.appendResults(result);
 
             slf.setFacility_SK(oneRecord.get(0));
             slf.setFacilityType(oneRecord.get(1));
@@ -66,8 +66,6 @@ public class WorkScheduleProcessor {
             slf.setROGNm(oneRecord.get(14));
             slf.setOpAreaId(oneRecord.get(15));
             slf.setOpAreaNm(oneRecord.get(16));
-
-
             slf.setFacilitySubTypeCd(oneRecord.get(17));
             slf.setAltFacilityId(oneRecord.get(18));
             slf.setFacilityBannerCd(oneRecord.get(19));
@@ -78,8 +76,6 @@ public class WorkScheduleProcessor {
             slf.setPostalZoneCd(oneRecord.get(24));
             slf.setStateCd(oneRecord.get(25));
             slf.setCountryCd(oneRecord.get(26));
-
-
             slf.setLatitudeDegree(oneRecord.get(27));
             slf.setLongitudeDegree(oneRecord.get(28));
             slf.setTimeZoneCd(oneRecord.get(29));
@@ -90,15 +86,12 @@ public class WorkScheduleProcessor {
             slf.setFacilityCurrentStatusCd(oneRecord.get(34));
             slf.setTierCompanyCd(oneRecord.get(35));
             slf.setConversionDt(oneRecord.get(36));
-
-
             slf.setConversionInd(oneRecord.get(37));
             slf.setPayrollUnitCd(oneRecord.get(38));
             slf.setManagerUserId(oneRecord.get(39));
             slf.setManagerEmployeeId(oneRecord.get(40));
             slf.setFacilityManagerNm(oneRecord.get(41));
             slf.setAccountingUnitNm(oneRecord.get(42));
-
             slf.setDW_BATCH_ID(oneRecord.get(43));
             slf.setDW_CREATE_TS(oneRecord.get(44));
             slf.setDW_CREATE_USER_ID(oneRecord.get(45));
@@ -108,7 +101,7 @@ public class WorkScheduleProcessor {
 
             recordSet.add(slf);
 
-        new XMLParser().WriteToFile(recordSet,outDir,"STORE_LABOR_FACILITY.csv");
+        XMLParser.WriteToFile(recordSet,outDir,"STORE_LABOR_FACILITY.csv");
     }
 
     public static void ShiftJobProcess(String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
@@ -116,8 +109,8 @@ public class WorkScheduleProcessor {
         List<SHIFT_JOB> recordSet = new ArrayList<>();
             XQPreparedExpression exp = new XQueryExecutor().newExp(qFileName);
             SHIFT_JOB sj = new SHIFT_JOB();
-            XQResultSequence result =  new XMLParser().getResult(XMLEntry, exp);
-            List<String> oneRecord = new XMLParser().appendResults(result);
+            XQResultSequence result =  XMLParser.getResult(XMLEntry, exp);
+            List<String> oneRecord = XMLParser.appendResults(result);
             sj.setEmployeeWorkSchedule_SK(oneRecord.get(0));
             sj.setSegmentStartTs(oneRecord.get(1));
             sj.setShiftJob_id(oneRecord.get(2));
@@ -134,7 +127,7 @@ public class WorkScheduleProcessor {
 
             recordSet.add(sj);
 
-        new XMLParser().WriteToFile(recordSet,outDir,"SHIFT_JOB.csv");
+        XMLParser.WriteToFile(recordSet,outDir,"SHIFT_JOB.csv");
     }
 
     public static void WorkTimeBreakProcess(String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
@@ -145,11 +138,9 @@ public class WorkScheduleProcessor {
 
         WORK_TIME_BREAK wtb = new WORK_TIME_BREAK();
 
-        XQResultSequence result =  new XMLParser().getResult(XMLEntry, exp);
+        XQResultSequence result =  XMLParser.getResult(XMLEntry, exp);
 
-        List<String> oneRecord = new XMLParser().appendResults(result);
-
-
+        List<String> oneRecord = XMLParser.appendResults(result);
 
         wtb.setEmployeeWorkTime_SK(oneRecord.get(0));
         wtb.setBreakSeqNbr(oneRecord.get(1));
@@ -164,7 +155,7 @@ public class WorkScheduleProcessor {
 
         recordSet.add(wtb);
 
-        new XMLParser().WriteToFile(recordSet,outDir,"WORK_TIME_BREAK.csv");
+        XMLParser.WriteToFile(recordSet,outDir,"WORK_TIME_BREAK.csv");
 
     }
 }

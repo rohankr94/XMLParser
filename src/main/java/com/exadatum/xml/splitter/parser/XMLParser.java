@@ -1,9 +1,11 @@
-package com.exadatum.xml.splitter.utils;
+package com.exadatum.xml.splitter.parser;
 
 import com.exadatum.xml.splitter.TempFileGenerator;
 import com.exadatum.xml.splitter.XQueryExecutor;
 import com.exadatum.xml.splitter.model.SHIFT_BREAK;
 import com.exadatum.xml.splitter.model.STORE_LABOR_FACILITY;
+import com.exadatum.xml.splitter.utils.WorkScheduleProcessor;
+import com.exadatum.xml.splitter.utils.WorkTimeProcessor;
 import com.opencsv.CSVWriter;
 import com.sun.corba.se.spi.orbutil.threadpool.Work;
 
@@ -46,27 +48,37 @@ public class XMLParser {
             String outDirWorkSchedule = getFile.getProperty("WorkSchedule");
             String outDirWorkTime = getFile.getProperty("WorkTime");
 
+            WorkScheduleProcessUtil(workScheduleXml,qShiftBreak,qShiftJob,qStoreLaborFacility,qWorkTimeBreak,outDirWorkSchedule);
+            WorkTimeProcessorUtil(workTimeXml,qStoreLaborEmployee,qEmployeeWorkSchedule,qEmployeeWorkTime,outDirWorkTime);
+        }
+
+
+        public static void WorkScheduleProcessUtil(String workScheduleXml,String qShiftBreak,String qShiftJob,String qStoreLaborFacility,
+                                                   String qWorkTimeBreak,String outDirWorkSchedule) throws IOException, XQException {
             File f = new File(workScheduleXml);
-            BufferedReader brForWorkSchedule = new BufferedReader(new FileReader(f));
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String XMLEntry ;
+            while ((XMLEntry = br.readLine()) != null) {
 
-            File f1 = new File(workTimeXml);
-            BufferedReader brForWorkTime = new BufferedReader(new FileReader(f1));
-
-        String XMLEntry ;
-        while ((XMLEntry = brForWorkSchedule.readLine()) != null) {
-
-            WorkScheduleProcessor.ShiftBreakProcess(XMLEntry,qShiftBreak,outDirWorkSchedule);
-            WorkScheduleProcessor.ShiftJobProcess(XMLEntry,qShiftJob,outDirWorkSchedule);
-            WorkScheduleProcessor.StroreLaborFacilityProcess(XMLEntry,qStoreLaborFacility,outDirWorkSchedule);
-            WorkScheduleProcessor.WorkTimeBreakProcess(XMLEntry,qWorkTimeBreak,outDirWorkSchedule);
+                WorkScheduleProcessor.ShiftBreakProcess(XMLEntry,qShiftBreak,outDirWorkSchedule);
+                WorkScheduleProcessor.ShiftJobProcess(XMLEntry,qShiftJob,outDirWorkSchedule);
+                WorkScheduleProcessor.StroreLaborFacilityProcess(XMLEntry,qStoreLaborFacility,outDirWorkSchedule);
+                WorkScheduleProcessor.WorkTimeBreakProcess(XMLEntry,qWorkTimeBreak,outDirWorkSchedule);
+            }
         }
 
-        while ((XMLEntry = brForWorkTime.readLine()) != null) {
+        public static void WorkTimeProcessorUtil(String workTimeXml,String qStoreLaborEmployee,String qEmployeeWorkSchedule,
+                                         String qEmployeeWorkTime, String outDirWorkTime) throws IOException, XQException {
 
-            WorkTimeProcessor.StoreLaborEmployeeProcess(XMLEntry,qStoreLaborEmployee,outDirWorkTime);
-            WorkTimeProcessor.EmployeeWorkScheduleProcess(XMLEntry,qEmployeeWorkSchedule,outDirWorkTime);
-            WorkTimeProcessor.EmployeeWorkTimeProcess(XMLEntry,qEmployeeWorkTime,outDirWorkTime);
-        }
+            File f = new File(workTimeXml);
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String XMLEntry;
+            while ((XMLEntry = br.readLine()) != null) {
+
+                WorkTimeProcessor.StoreLaborEmployeeProcess(XMLEntry,qStoreLaborEmployee,outDirWorkTime);
+                WorkTimeProcessor.EmployeeWorkScheduleProcess(XMLEntry,qEmployeeWorkSchedule,outDirWorkTime);
+                WorkTimeProcessor.EmployeeWorkTimeProcess(XMLEntry,qEmployeeWorkTime,outDirWorkTime);
+            }
 
         }
 
@@ -77,7 +89,7 @@ public class XMLParser {
         exp.bindDocument(new QName("doc"), replaceDoc, null, null);
         replaceDoc.close();
         XQResultSequence result = exp.executeQuery();
-        File tempFile = new File("/home/exa00083/tempXML.xml");
+        File tempFile = new File("tempXML.xml");
         tempFile.delete();
         return result;
     }
