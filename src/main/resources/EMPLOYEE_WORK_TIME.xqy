@@ -14,6 +14,11 @@ then
 ( data($doc/Facility_SK) )
 else ("") ,
 
+if (exists($doc/Facility_ID))
+then
+( data($doc/Facility_ID) )
+else ("") ,
+
 if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='Employee']//*[local-name()='EmployeeId']))
 then
 ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='Employee']//*[local-name()='EmployeeId']) )
@@ -27,6 +32,11 @@ else ("") ,
 if (exists($doc/DeptNm))
 then
 ( data($doc/DeptNm) )
+else ("") ,
+
+if (exists($doc/WorkWeekStartDt))
+then
+( data($doc/WorkWeekStartDt) )
 else ("") ,
 
 if (exists($doc/WorkWeekStartDay))

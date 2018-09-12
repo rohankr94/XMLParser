@@ -4,12 +4,14 @@ import com.exadatum.xml.splitter.utils.Constants;
 
 public class EMPLOYEE_WORK_TIME {
 
-
+    //facility id and workweekstartDt
     private String EmployeeWorkTime_SK;
     private String Facility_SK;
+    private String Facility_ID;
     private String EmployeeId;
     private String DeptId;
     private String DeptNm;
+    private String WorkWeekStartDt;
     private String WorkWeekStartDay;
     private String WorkWeekEndDt;
     private String WorkWeekEndDay;
@@ -312,44 +314,61 @@ public class EMPLOYEE_WORK_TIME {
         this.DW_LOGICAL_DELETE_IND = DW_LOGICAL_DELETE_IND;
     }
 
+    public String getFacility_ID() {
+        return Facility_ID;
+    }
+
+    public void setFacility_ID(String facility_ID) {
+        Facility_ID = facility_ID;
+    }
+
+    public String getWorkWeekStartDt() {
+        return WorkWeekStartDt;
+    }
+
+    public void setWorkWeekStartDt(String workWeekStartDt) {
+        WorkWeekStartDt = workWeekStartDt;
+    }
 
     @Override
     public String toString() {
         return
                 EmployeeWorkTime_SK + Constants.FIELD_SEPERATOR +
-                Facility_SK + Constants.FIELD_SEPERATOR +
-                 EmployeeId + Constants.FIELD_SEPERATOR +
-                 DeptId + Constants.FIELD_SEPERATOR +
-                 DeptNm + Constants.FIELD_SEPERATOR +
-                 WorkWeekStartDay + Constants.FIELD_SEPERATOR +
-                WorkWeekEndDt + Constants.FIELD_SEPERATOR +
-                 WorkWeekEndDay + Constants.FIELD_SEPERATOR +
-                 WorkDt + Constants.FIELD_SEPERATOR +
-                 WorkDayOfWk + Constants.FIELD_SEPERATOR +
-                 ShiftBreakSeqNbr + Constants.FIELD_SEPERATOR +
-                 ShiftId + Constants.FIELD_SEPERATOR +
-                 ShiftDt + Constants.FIELD_SEPERATOR +
-                 ShiftStartTs + Constants.FIELD_SEPERATOR +
-                 ShiftEndTs + Constants.FIELD_SEPERATOR +
-                 ShiftDurationHrs + Constants.FIELD_SEPERATOR +
-                 JobCd + Constants.FIELD_SEPERATOR +
-                 JobTitle + Constants.FIELD_SEPERATOR +
-                WageGroupCd + Constants.FIELD_SEPERATOR +
-                 WageType + Constants.FIELD_SEPERATOR +
-                 AbsenceType + Constants.FIELD_SEPERATOR +
-                 OvertimeInd + Constants.FIELD_SEPERATOR +
-                 HourTypeId + Constants.FIELD_SEPERATOR +
-                 HourTypeDsc + Constants.FIELD_SEPERATOR +
-                TimeCodeId + Constants.FIELD_SEPERATOR +
-                 TimeCodeDsc + Constants.FIELD_SEPERATOR +
-                 ProjectId + Constants.FIELD_SEPERATOR +
-                 ProjectDsc + Constants.FIELD_SEPERATOR +
-                 DW_BATCH_ID + Constants.FIELD_SEPERATOR +
-                 DW_CREATE_TS + Constants.FIELD_SEPERATOR +
-                DW_CREATE_USER_ID + Constants.FIELD_SEPERATOR +
-                DW_LAST_UPDATE_TS + Constants.FIELD_SEPERATOR +
-                 DW_LAST_UPDATE_USER_ID + Constants.FIELD_SEPERATOR +
-                DW_LOGICAL_DELETE_IND
+                        Facility_SK + Constants.FIELD_SEPERATOR +
+                        Facility_ID + Constants.FIELD_SEPERATOR +
+                        EmployeeId + Constants.FIELD_SEPERATOR +
+                        DeptId + Constants.FIELD_SEPERATOR +
+                        DeptNm + Constants.FIELD_SEPERATOR +
+                        WorkWeekStartDt + Constants.FIELD_SEPERATOR +
+                        WorkWeekStartDay + Constants.FIELD_SEPERATOR +
+                        WorkWeekEndDt + Constants.FIELD_SEPERATOR +
+                        WorkWeekEndDay + Constants.FIELD_SEPERATOR +
+                        WorkDt + Constants.FIELD_SEPERATOR +
+                        WorkDayOfWk + Constants.FIELD_SEPERATOR +
+                        ShiftBreakSeqNbr + Constants.FIELD_SEPERATOR +
+                        ShiftId + Constants.FIELD_SEPERATOR +
+                        ShiftDt + Constants.FIELD_SEPERATOR +
+                        ShiftStartTs + Constants.FIELD_SEPERATOR +
+                        ShiftEndTs + Constants.FIELD_SEPERATOR +
+                        ShiftDurationHrs + Constants.FIELD_SEPERATOR +
+                        JobCd + Constants.FIELD_SEPERATOR +
+                        JobTitle + Constants.FIELD_SEPERATOR +
+                        WageGroupCd + Constants.FIELD_SEPERATOR +
+                        WageType + Constants.FIELD_SEPERATOR +
+                        AbsenceType + Constants.FIELD_SEPERATOR +
+                        OvertimeInd + Constants.FIELD_SEPERATOR +
+                        HourTypeId + Constants.FIELD_SEPERATOR +
+                        HourTypeDsc + Constants.FIELD_SEPERATOR +
+                        TimeCodeId + Constants.FIELD_SEPERATOR +
+                        TimeCodeDsc + Constants.FIELD_SEPERATOR +
+                        ProjectId + Constants.FIELD_SEPERATOR +
+                        ProjectDsc + Constants.FIELD_SEPERATOR +
+                        DW_BATCH_ID + Constants.FIELD_SEPERATOR +
+                        DW_CREATE_TS + Constants.FIELD_SEPERATOR +
+                        DW_CREATE_USER_ID + Constants.FIELD_SEPERATOR +
+                        DW_LAST_UPDATE_TS + Constants.FIELD_SEPERATOR +
+                        DW_LAST_UPDATE_USER_ID + Constants.FIELD_SEPERATOR +
+                        DW_LOGICAL_DELETE_IND
                 ;
     }
 }

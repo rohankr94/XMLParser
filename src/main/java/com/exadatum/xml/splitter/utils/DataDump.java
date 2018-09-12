@@ -38,7 +38,6 @@ public interface DataDump {
 
     static <T> void WriteToFile(List<T> recordSet, String OutDir, String outFileName) throws IOException {
 
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
         File file = new File(OutDir + " " + outFileName);
         file.getParentFile().mkdirs();
         FileWriter outFile = new FileWriter(file, true);
