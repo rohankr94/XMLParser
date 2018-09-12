@@ -1,5 +1,7 @@
 package com.exadatum.xml.splitter.model;
 
+import com.exadatum.xml.splitter.utils.Constants;
+
 public class WORK_TIME_BREAK {
 
     private String EmployeeWorkTime_SK;
@@ -97,15 +99,15 @@ public class WORK_TIME_BREAK {
 
     @Override
     public String toString() {
-        return EmployeeWorkTime_SK + "," +
-               BreakSeqNbr + "," +
-               BreakStartTs + "," +
-               BreakEndTs + "," +
-               DW_BATCH_ID + "," +
-               DW_CREATE_TS + "," +
-               DW_CREATE_USER_ID + "," +
-               DW_LAST_UPDATE_TS + "," +
-               DW_LAST_UPDATE_USER_ID + "," +
+        return EmployeeWorkTime_SK + Constants.FIELD_SEPERATOR +
+               BreakSeqNbr + Constants.FIELD_SEPERATOR +
+               BreakStartTs + Constants.FIELD_SEPERATOR +
+               BreakEndTs + Constants.FIELD_SEPERATOR +
+               DW_BATCH_ID + Constants.FIELD_SEPERATOR +
+               DW_CREATE_TS + Constants.FIELD_SEPERATOR +
+               DW_CREATE_USER_ID + Constants.FIELD_SEPERATOR +
+               DW_LAST_UPDATE_TS + Constants.FIELD_SEPERATOR +
+               DW_LAST_UPDATE_USER_ID + Constants.FIELD_SEPERATOR +
                DW_LOGICAL_DELETE_IND
                ;
     }

@@ -1,5 +1,7 @@
 package com.exadatum.xml.splitter.model;
 
+import com.exadatum.xml.splitter.utils.Constants;
+
 public class SHIFT_JOB {
 
     private String EmployeeWorkSchedule_SK;
@@ -122,18 +124,18 @@ public class SHIFT_JOB {
 
     @Override
     public String toString() {
-        return EmployeeWorkSchedule_SK + "," +
-                SegmentStartTs + "," +
-                ShiftJob_id + "," +
-                ShiftJobCd + "," +
-                SegmentId + "," +
-                SegmentEndTs + "," +
-                ShiftJobTitleNm + "," +
-                DW_BATCH_ID + "," +
-                DW_CREATE_TS + "," +
-                DW_CREATE_USER_ID + "," +
-                DW_LAST_UPDATE_TS + "," +
-                DW_LAST_UPDATE_USER_ID + "," +
+        return EmployeeWorkSchedule_SK + Constants.FIELD_SEPERATOR +
+                SegmentStartTs + Constants.FIELD_SEPERATOR +
+                ShiftJob_id + Constants.FIELD_SEPERATOR +
+                ShiftJobCd + Constants.FIELD_SEPERATOR +
+                SegmentId + Constants.FIELD_SEPERATOR +
+                SegmentEndTs + Constants.FIELD_SEPERATOR +
+                ShiftJobTitleNm + Constants.FIELD_SEPERATOR +
+                DW_BATCH_ID + Constants.FIELD_SEPERATOR +
+                DW_CREATE_TS + Constants.FIELD_SEPERATOR +
+                DW_CREATE_USER_ID + Constants.FIELD_SEPERATOR +
+                DW_LAST_UPDATE_TS + Constants.FIELD_SEPERATOR +
+                DW_LAST_UPDATE_USER_ID + Constants.FIELD_SEPERATOR +
                 DW_LOGICAL_DELETE_IND
                 ;
     }

@@ -20,19 +20,17 @@
         </plugins>
     </build>
     <dependencies>
-    <dependency>
-        <groupId>net.sf.saxon</groupId>
-        <artifactId>Saxon-HEJ</artifactId>
-        <version>9.0</version>
-    </dependency>
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HEJ</artifactId>
+            <version>9.0</version>
+        </dependency>
 
-    <dependency>
-        <groupId>net.sf.saxon</groupId>
-        <artifactId>saxon</artifactId>
-        <version>9.0</version>
-    </dependency>
-
-
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>saxon</artifactId>
+            <version>9.0</version>
+        </dependency>
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
@@ -40,7 +38,21 @@
         </dependency>
 
 
-</dependencies>
-
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.exadatum.xml.splitter.processors.WorkScheduleProcessor</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

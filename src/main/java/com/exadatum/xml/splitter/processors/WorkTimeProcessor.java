@@ -1,6 +1,6 @@
-package com.exadatum.xml.splitter.utils;
+package com.exadatum.xml.splitter.processors;
 
-import com.exadatum.xml.splitter.XQueryExecutor;
+import com.exadatum.xml.splitter.utils.XQueryExecutor;
 import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_SCHEDULE;
 import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_TIME;
 import com.exadatum.xml.splitter.model.STORE_LABOR_EMPLOYEE;

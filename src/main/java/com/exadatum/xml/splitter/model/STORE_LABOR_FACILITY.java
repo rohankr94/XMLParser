@@ -1,5 +1,7 @@
 package com.exadatum.xml.splitter.model;
 
+import com.exadatum.xml.splitter.utils.Constants;
+
 public class STORE_LABOR_FACILITY {
 
     private String Facility_SK;
@@ -447,54 +449,54 @@ public class STORE_LABOR_FACILITY {
     @Override
     public String toString() {
         return
-                Facility_SK + "," +
-                 FacilityType + "," +
-                FacilityID + "," +
-                 FacilityName + "," +
-                FirstEffectiveDt + "," +
-                LastEffectiveDt + "," +
-                ParentFacilityId + "," +
-                CorpId + "," +
-                 CorpNm + "," +
-                DivisionId + "," +
-                DivisionNm + "," +
-                DistrictId + "," +
-                DistrictNm + "," +
-                ROGId + "," +
-                ROGNm + "," +
-                 OpAreaId + "," +
-                OpAreaNm + "," +
-                FacilitySubTypeCd + "," +
-                AltFacilityId + "," +
-                 FacilityBannerCd + "," +
-                 AddressLine1txt + "," +
-                AddressLine2txt + "," +
-                CityNm + "," +
-                 CountyNm + "," +
-                PostalZoneCd + "," +
-                StateCd + "," +
-                 CountryCd + "," +
-                 LatitudeDegree + "," +
-                 LongitudeDegree + "," +
-                 TimeZoneCd + "," +
-                 PhoneNbr + "," +
-                axNbr + "," +
-                 FacilityOpenDt + "," +
-                 FacilityCloseAnnouncedDt + "," +
-                 FacilityCurrentStatusCd + "," +
-                 TierCompanyCd + "," +
-                 ConversionDt + "," +
-                 ConversionInd + "," +
-                 PayrollUnitCd + "," +
-                 ManagerUserId + "," +
-                 ManagerEmployeeId + "," +
-                 FacilityManagerNm + "," +
-                 AccountingUnitNm + "," +
-                 DW_BATCH_ID + "," +
-                DW_CREATE_TS + "," +
-                 DW_CREATE_USER_ID + "," +
-                DW_LAST_UPDATE_TS + "," +
-                 DW_LAST_UPDATE_USER_ID + "," +
+                Facility_SK + Constants.FIELD_SEPERATOR +
+                 FacilityType + Constants.FIELD_SEPERATOR +
+                FacilityID + Constants.FIELD_SEPERATOR +
+                 FacilityName + Constants.FIELD_SEPERATOR +
+                FirstEffectiveDt + Constants.FIELD_SEPERATOR +
+                LastEffectiveDt + Constants.FIELD_SEPERATOR +
+                ParentFacilityId + Constants.FIELD_SEPERATOR +
+                CorpId + Constants.FIELD_SEPERATOR +
+                 CorpNm + Constants.FIELD_SEPERATOR +
+                DivisionId + Constants.FIELD_SEPERATOR +
+                DivisionNm + Constants.FIELD_SEPERATOR +
+                DistrictId + Constants.FIELD_SEPERATOR +
+                DistrictNm + Constants.FIELD_SEPERATOR +
+                ROGId + Constants.FIELD_SEPERATOR +
+                ROGNm + Constants.FIELD_SEPERATOR +
+                 OpAreaId + Constants.FIELD_SEPERATOR +
+                OpAreaNm + Constants.FIELD_SEPERATOR +
+                FacilitySubTypeCd + Constants.FIELD_SEPERATOR +
+                AltFacilityId + Constants.FIELD_SEPERATOR +
+                 FacilityBannerCd + Constants.FIELD_SEPERATOR +
+                 AddressLine1txt + Constants.FIELD_SEPERATOR +
+                AddressLine2txt + Constants.FIELD_SEPERATOR +
+                CityNm + Constants.FIELD_SEPERATOR +
+                 CountyNm + Constants.FIELD_SEPERATOR +
+                PostalZoneCd + Constants.FIELD_SEPERATOR +
+                StateCd + Constants.FIELD_SEPERATOR +
+                 CountryCd + Constants.FIELD_SEPERATOR +
+                 LatitudeDegree + Constants.FIELD_SEPERATOR +
+                 LongitudeDegree + Constants.FIELD_SEPERATOR +
+                 TimeZoneCd + Constants.FIELD_SEPERATOR +
+                 PhoneNbr + Constants.FIELD_SEPERATOR +
+                axNbr + Constants.FIELD_SEPERATOR +
+                 FacilityOpenDt + Constants.FIELD_SEPERATOR +
+                 FacilityCloseAnnouncedDt + Constants.FIELD_SEPERATOR +
+                 FacilityCurrentStatusCd + Constants.FIELD_SEPERATOR +
+                 TierCompanyCd + Constants.FIELD_SEPERATOR +
+                 ConversionDt + Constants.FIELD_SEPERATOR +
+                 ConversionInd + Constants.FIELD_SEPERATOR +
+                 PayrollUnitCd + Constants.FIELD_SEPERATOR +
+                 ManagerUserId + Constants.FIELD_SEPERATOR +
+                 ManagerEmployeeId + Constants.FIELD_SEPERATOR +
+                 FacilityManagerNm + Constants.FIELD_SEPERATOR +
+                 AccountingUnitNm + Constants.FIELD_SEPERATOR +
+                 DW_BATCH_ID + Constants.FIELD_SEPERATOR +
+                DW_CREATE_TS + Constants.FIELD_SEPERATOR +
+                 DW_CREATE_USER_ID + Constants.FIELD_SEPERATOR +
+                DW_LAST_UPDATE_TS + Constants.FIELD_SEPERATOR +
+                 DW_LAST_UPDATE_USER_ID + Constants.FIELD_SEPERATOR +
                 DW_LOGICAL_DELETE_IND
                 ;
     }

@@ -1,6 +1,6 @@
-package com.exadatum.xml.splitter.utils;
+package com.exadatum.xml.splitter.processors;
 
-import com.exadatum.xml.splitter.XQueryExecutor;
+import com.exadatum.xml.splitter.utils.XQueryExecutor;
 import com.exadatum.xml.splitter.model.SHIFT_BREAK;
 import com.exadatum.xml.splitter.model.SHIFT_JOB;
 import com.exadatum.xml.splitter.model.STORE_LABOR_FACILITY;
@@ -21,8 +21,8 @@ public class WorkScheduleProcessor {
         List<SHIFT_BREAK> recordSet = new ArrayList<>();
             XQPreparedExpression exp = new XQueryExecutor().newExp(qFileName);
             SHIFT_BREAK sb = new SHIFT_BREAK();
-            XQResultSequence result =  new XMLParser().getResult(XMLEntry, exp);
-            List<String> oneRecord = new XMLParser().appendResults(result);
+            XQResultSequence result =  XMLParser.getResult(XMLEntry, exp);
+            List<String> oneRecord = XMLParser.appendResults(result);
             sb.setEmployeeWorkSchedule_SK(oneRecord.get(0));
             sb.setSequenceNbr(oneRecord.get(1));
             sb.setBreakStartTs(oneRecord.get(2));

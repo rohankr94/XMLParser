@@ -1,5 +1,7 @@
 package com.exadatum.xml.splitter.model;
 
+import com.exadatum.xml.splitter.utils.Constants;
+
 public class STORE_LABOR_EMPLOYEE {
 
     private String EmployeeId ;
@@ -149,21 +151,21 @@ public class STORE_LABOR_EMPLOYEE {
 
     @Override
     public String toString() {
-        return EmployeeId + "," +
-                EmployeeNmTypeCd + "," +
-                FormattedNm + "," +
-                GivenNm + "," +
-                NickNm + "," +
-                MiddleNm + "," +
-                FamilyNm + "," +
-                MaidenNm + "," +
-                EmployeeTypeCd + "," +
-                EmployeeAlternateId + "," +
-                DW_BATCH_ID + "," +
-                DW_CREATE_TS + "," +
-                DW_CREATE_USER_ID+ "," +
-                DW_LAST_UPDATE_TS+ "," +
-                DW_LAST_UPDATE_USER_ID+"," +
+        return EmployeeId + Constants.FIELD_SEPERATOR +
+                EmployeeNmTypeCd + Constants.FIELD_SEPERATOR +
+                FormattedNm + Constants.FIELD_SEPERATOR +
+                GivenNm + Constants.FIELD_SEPERATOR +
+                NickNm + Constants.FIELD_SEPERATOR +
+                MiddleNm + Constants.FIELD_SEPERATOR +
+                FamilyNm + Constants.FIELD_SEPERATOR +
+                MaidenNm + Constants.FIELD_SEPERATOR +
+                EmployeeTypeCd + Constants.FIELD_SEPERATOR +
+                EmployeeAlternateId + Constants.FIELD_SEPERATOR +
+                DW_BATCH_ID + Constants.FIELD_SEPERATOR +
+                DW_CREATE_TS + Constants.FIELD_SEPERATOR +
+                DW_CREATE_USER_ID+ Constants.FIELD_SEPERATOR +
+                DW_LAST_UPDATE_TS+ Constants.FIELD_SEPERATOR +
+                DW_LAST_UPDATE_USER_ID+Constants.FIELD_SEPERATOR +
                 DW_LOGICAL_DELETE_IND
                 ;
     }

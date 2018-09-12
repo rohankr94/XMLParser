@@ -1,4 +1,4 @@
-package com.exadatum.xml.splitter;
+package com.exadatum.xml.splitter.utils;
 
 import java.io.File;
 import java.io.FileWriter;

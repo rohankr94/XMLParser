@@ -1,5 +1,7 @@
 package com.exadatum.xml.splitter.model;
 
+import com.exadatum.xml.splitter.utils.Constants;
+
 public class SHIFT_BREAK {
 
     private String EmployeeWorkSchedule_SK;
@@ -105,16 +107,16 @@ public class SHIFT_BREAK {
     @Override
     public String toString() {
         return
-                EmployeeWorkSchedule_SK + "," +
-                SequenceNbr + "," +
-                BreakStartTs + "," +
-                BreakEndTs + "," +
-                BreakType + "," +
-                DW_BATCH_ID + "," +
-                DW_CREATE_TS + "," +
-                DW_CREATE_USER_ID + "," +
-                DW_LAST_UPDATE_TS + "," +
-                DW_LAST_UPDATE_USER_ID + "," +
-                DW_LOGICAL_DELETE_IND + "," ;
+                EmployeeWorkSchedule_SK + Constants.FIELD_SEPERATOR +
+                SequenceNbr + Constants.FIELD_SEPERATOR +
+                BreakStartTs + Constants.FIELD_SEPERATOR +
+                BreakEndTs + Constants.FIELD_SEPERATOR +
+                BreakType + Constants.FIELD_SEPERATOR +
+                DW_BATCH_ID + Constants.FIELD_SEPERATOR +
+                DW_CREATE_TS + Constants.FIELD_SEPERATOR +
+                DW_CREATE_USER_ID + Constants.FIELD_SEPERATOR +
+                DW_LAST_UPDATE_TS + Constants.FIELD_SEPERATOR +
+                DW_LAST_UPDATE_USER_ID + Constants.FIELD_SEPERATOR +
+                DW_LOGICAL_DELETE_IND + Constants.FIELD_SEPERATOR ;
     }
 }
