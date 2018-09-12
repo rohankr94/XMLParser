@@ -1,19 +1,60 @@
 package com.exadatum.xml.splitter.processors;
 
+import com.exadatum.xml.splitter.utils.DataDump;
 import com.exadatum.xml.splitter.utils.XQueryExecutor;
 import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_SCHEDULE;
 import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_TIME;
 import com.exadatum.xml.splitter.model.STORE_LABOR_EMPLOYEE;
-import com.exadatum.xml.splitter.parser.XMLParser;
 
 import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class WorkTimeProcessor {
+
+    public static void main(String[] args) throws IOException {
+        try {
+            execute(args);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (XQException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void execute(String[] args) throws XQException, IOException {
+
+        FileReader readProperty = new FileReader(args[0]);
+        Properties getFile = new Properties();
+        getFile.load(readProperty);
+
+        String workTimeXml = getFile.getProperty("WorkTimeXml");
+        String qStoreLaborEmployee = getFile.getProperty("StoreLaborEmployeeQueryFile");
+        String qEmployeeWorkSchedule = getFile.getProperty("EmployeeWorkScheduleQueryFile");
+        String qEmployeeWorkTime = getFile.getProperty("EmployeeWorkTimeQueryFile");
+        String outDirWorkTime = getFile.getProperty("WorkTime");
+
+        WorkTimeProcessorUtil(workTimeXml, qStoreLaborEmployee, qEmployeeWorkSchedule, qEmployeeWorkTime, outDirWorkTime);
+    }
+
+    public static void WorkTimeProcessorUtil(String workTimeXml, String qStoreLaborEmployee, String qEmployeeWorkSchedule,
+                                             String qEmployeeWorkTime, String outDirWorkTime) throws IOException, XQException {
+
+        File f = new File(workTimeXml);
+        BufferedReader br = new BufferedReader(new FileReader(f));
+        String XMLEntry;
+        while ((XMLEntry = br.readLine()) != null) {
+
+            WorkTimeProcessor.StoreLaborEmployeeProcess(XMLEntry, qStoreLaborEmployee, outDirWorkTime);
+            WorkTimeProcessor.EmployeeWorkScheduleProcess(XMLEntry, qEmployeeWorkSchedule, outDirWorkTime);
+            WorkTimeProcessor.EmployeeWorkTimeProcess(XMLEntry, qEmployeeWorkTime, outDirWorkTime);
+        }
+
+    }
 
 
     public static void StoreLaborEmployeeProcess(String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
@@ -24,9 +65,9 @@ public class WorkTimeProcessor {
 
             STORE_LABOR_EMPLOYEE sle = new STORE_LABOR_EMPLOYEE();
 
-            XQResultSequence result =  XMLParser.getResult(XMLEntry, exp);
+            XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
 
-            List<String> oneRecord = XMLParser.appendResults(result);
+            List<String> oneRecord = DataDump.appendResults(result);
 
             sle.setEmployeeId(oneRecord.get(0));
             sle.setEmployeeNmTypeCd(oneRecord.get(1));
@@ -47,7 +88,7 @@ public class WorkTimeProcessor {
 
             recordSet.add(sle);
 
-        XMLParser.WriteToFile(recordSet,outDir,"STORE_LABOR_EMPLOYEE.csv");
+        DataDump.WriteToFile(recordSet,outDir,"STORE_LABOR_EMPLOYEE.csv");
 
     }
 
@@ -59,9 +100,9 @@ public class WorkTimeProcessor {
 
         EMPLOYEE_WORK_SCHEDULE ews = new EMPLOYEE_WORK_SCHEDULE();
 
-        XQResultSequence result =  XMLParser.getResult(XMLEntry, exp);
+        XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
 
-        List<String> oneRecord = XMLParser.appendResults(result);
+        List<String> oneRecord = DataDump.appendResults(result);
 
 
         ews.setEmployeeWorkSchedule_SK(oneRecord.get(0));
@@ -93,7 +134,7 @@ public class WorkTimeProcessor {
 
         recordSet.add(ews);
 
-        XMLParser.WriteToFile(recordSet,outDir,"EMPLOYEE_WORK_SCHEDULE.csv");
+        DataDump.WriteToFile(recordSet,outDir,"EMPLOYEE_WORK_SCHEDULE.csv");
 
     }
 
@@ -105,9 +146,9 @@ public class WorkTimeProcessor {
 
         EMPLOYEE_WORK_TIME ewt = new EMPLOYEE_WORK_TIME();
 
-        XQResultSequence result =  XMLParser.getResult(XMLEntry, exp);
+        XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
 
-        List<String> oneRecord = XMLParser.appendResults(result);
+        List<String> oneRecord = DataDump.appendResults(result);
 
 
 
@@ -149,7 +190,7 @@ public class WorkTimeProcessor {
 
         recordSet.add(ewt);
 
-        XMLParser.WriteToFile(recordSet,outDir,"EMPLOYEE_WORK_TIME.csv");
+        DataDump.WriteToFile(recordSet,outDir,"EMPLOYEE_WORK_TIME.csv");
 
     }
 
