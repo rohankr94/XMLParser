@@ -10,7 +10,10 @@ import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import java.io.*;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -81,12 +84,12 @@ public class WorkTimeProcessor {
             sle.setMaidenNm(oneRecord.get(7).trim());
             sle.setEmployeeTypeCd(oneRecord.get(8).trim());
             sle.setEmployeeAlternateId(oneRecord.get(9).trim());
-            sle.setDW_BATCH_ID(String.valueOf(batchId).trim());
+            sle.setDW_BATCH_ID(String.valueOf(batchId%100).trim());
             sle.setDW_CREATE_TS(ts.toString().trim());
             sle.setDW_CREATE_USER_ID("create");
             sle.setDW_LAST_UPDATE_TS(ts.toString());
             sle.setDW_LAST_UPDATE_USER_ID("last");
-            sle.setDW_LOGICAL_DELETE_IND("logical");
+            sle.setDW_LOGICAL_DELETE_IND("0");
 
             recordSet.add(sle);
 
@@ -127,8 +130,8 @@ public class WorkTimeProcessor {
         ewt.setShiftBreakSeqNbr(oneRecord.get(12));
         ewt.setShiftId(oneRecord.get(13));
         ewt.setShiftDt(oneRecord.get(14));
-        ewt.setShiftStartTs(oneRecord.get(15));
-        ewt.setShiftEndTs(oneRecord.get(16));
+        ewt.setShiftStartTs(dateTimeFormatter(oneRecord.get(15)));
+        ewt.setShiftEndTs(dateTimeFormatter(oneRecord.get(16)));
         ewt.setShiftDurationHrs(oneRecord.get(17));
         ewt.setJobCd(oneRecord.get(18));
         ewt.setJobTitle(oneRecord.get(19));
@@ -142,12 +145,12 @@ public class WorkTimeProcessor {
         ewt.setTimeCodeDsc(oneRecord.get(27));
         ewt.setProjectId(oneRecord.get(28));
         ewt.setProjectDsc(oneRecord.get(29));
-        ewt.setDW_BATCH_ID(String.valueOf(batchId));
+        ewt.setDW_BATCH_ID(String.valueOf(batchId%100));
         ewt.setDW_CREATE_TS(ts.toString());
         ewt.setDW_CREATE_USER_ID("create");
         ewt.setDW_LAST_UPDATE_TS(ts.toString());
         ewt.setDW_LAST_UPDATE_USER_ID("last");
-        ewt.setDW_LOGICAL_DELETE_IND("logical");
+        ewt.setDW_LOGICAL_DELETE_IND("0");
 
 
         recordSet.add(ewt);
@@ -156,7 +159,19 @@ public class WorkTimeProcessor {
 
     }
 
-
+    public static String dateTimeFormatter(String str) {
+        String format2 = "";
+        try {
+            SimpleDateFormat sourceFormater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+            Date date1 = sourceFormater.parse(str);
+            String targetFormater = "yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat format = new SimpleDateFormat(targetFormater);
+            format2 = format.format(date1);
+        } catch (ParseException e) {
+            return "";
+        }
+        return format2;
+    }
 
 
 }
