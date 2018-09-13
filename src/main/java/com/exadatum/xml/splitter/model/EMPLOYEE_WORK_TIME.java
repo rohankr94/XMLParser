@@ -4,7 +4,6 @@ import com.exadatum.xml.splitter.utils.Constants;
 
 public class EMPLOYEE_WORK_TIME {
 
-    //facility id and workweekstartDt
     private String EmployeeWorkTime_SK;
     private String Facility_SK;
     private String Facility_ID;

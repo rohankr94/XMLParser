@@ -1,16 +1,14 @@
 package com.exadatum.xml.splitter.processors;
 
+import com.exadatum.xml.splitter.model.*;
 import com.exadatum.xml.splitter.utils.DataDump;
 import com.exadatum.xml.splitter.utils.XQueryExecutor;
-import com.exadatum.xml.splitter.model.SHIFT_BREAK;
-import com.exadatum.xml.splitter.model.SHIFT_JOB;
-import com.exadatum.xml.splitter.model.STORE_LABOR_FACILITY;
-import com.exadatum.xml.splitter.model.WORK_TIME_BREAK;
 
 import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -38,13 +36,15 @@ public class WorkScheduleProcessor {
         String qShiftJob = getFile.getProperty("ShiftJobQueryFile");
         String qStoreLaborFacility = getFile.getProperty("StoreLaborFacilityQueryFile");
         String qWorkTimeBreak = getFile.getProperty("WorkTimeBreakQueryFile");
+        String qEmployeeWorkSchedule = getFile.getProperty("EmployeeWorkScheduleQueryFile");
         String outDirWorkSchedule = getFile.getProperty("WorkSchedule");
 
-        WorkScheduleProcessUtil(workScheduleXml, qShiftBreak, qShiftJob, qStoreLaborFacility, qWorkTimeBreak, outDirWorkSchedule);
+        WorkScheduleProcessUtil(workScheduleXml, qShiftBreak, qShiftJob, qStoreLaborFacility, qWorkTimeBreak,
+                qEmployeeWorkSchedule, outDirWorkSchedule);
     }
 
     public static void WorkScheduleProcessUtil(String workScheduleXml, String qShiftBreak, String qShiftJob, String qStoreLaborFacility,
-                                               String qWorkTimeBreak, String outDirWorkSchedule) throws IOException, XQException {
+                                               String qWorkTimeBreak, String qEmployeeWorkSchedule, String outDirWorkSchedule) throws IOException, XQException {
         File f = new File(workScheduleXml);
         BufferedReader br = new BufferedReader(new FileReader(f));
         String XMLEntry;
@@ -54,6 +54,7 @@ public class WorkScheduleProcessor {
             WorkScheduleProcessor.ShiftJobProcess(XMLEntry, qShiftJob, outDirWorkSchedule);
             WorkScheduleProcessor.StroreLaborFacilityProcess(XMLEntry, qStoreLaborFacility, outDirWorkSchedule);
             WorkScheduleProcessor.WorkTimeBreakProcess(XMLEntry, qWorkTimeBreak, outDirWorkSchedule);
+            WorkScheduleProcessor.EmployeeWorkScheduleProcess(XMLEntry, qEmployeeWorkSchedule, outDirWorkSchedule);
         }
     }
 
@@ -64,17 +65,22 @@ public class WorkScheduleProcessor {
             SHIFT_BREAK sb = new SHIFT_BREAK();
             XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
             List<String> oneRecord = DataDump.appendResults(result);
+
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            long batchId = System.currentTimeMillis();
+
             sb.setEmployeeWorkSchedule_SK(oneRecord.get(0));
             sb.setSequenceNbr(oneRecord.get(1));
             sb.setBreakStartTs(oneRecord.get(2));
             sb.setBreakEndTs(oneRecord.get(3));
             sb.setBreakType(oneRecord.get(4));
             sb.setDW_BATCH_ID(oneRecord.get(5));
-            sb.setDW_CREATE_TS(oneRecord.get(6));
-            sb.setDW_CREATE_USER_ID(oneRecord.get(7));
-            sb.setDW_LAST_UPDATE_TS(oneRecord.get(8));
-            sb.setDW_LAST_UPDATE_USER_ID(oneRecord.get(9));
-            sb.setDW_LOGICAL_DELETE_IND(oneRecord.get(10));
+            sb.setDW_BATCH_ID(String.valueOf(batchId));
+            sb.setDW_CREATE_TS(ts.toString());
+            sb.setDW_CREATE_USER_ID("create_user_id");
+            sb.setDW_LAST_UPDATE_TS(ts.toString());
+            sb.setDW_LAST_UPDATE_USER_ID("last");
+            sb.setDW_LOGICAL_DELETE_IND("logical");
             recordSet.add(sb);
 
         DataDump.WriteToFile(recordSet,outDir,"SHIFT_BREAK.csv");
@@ -89,6 +95,9 @@ public class WorkScheduleProcessor {
             STORE_LABOR_FACILITY slf = new STORE_LABOR_FACILITY();
             XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
             List<String> oneRecord =  DataDump.appendResults(result);
+
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            long batchId = System.currentTimeMillis();
 
             slf.setFacility_SK(oneRecord.get(0));
             slf.setFacilityType(oneRecord.get(1));
@@ -133,12 +142,12 @@ public class WorkScheduleProcessor {
             slf.setManagerEmployeeId(oneRecord.get(40));
             slf.setFacilityManagerNm(oneRecord.get(41));
             slf.setAccountingUnitNm(oneRecord.get(42));
-            slf.setDW_BATCH_ID(oneRecord.get(43));
-            slf.setDW_CREATE_TS(oneRecord.get(44));
-            slf.setDW_CREATE_USER_ID(oneRecord.get(45));
-            slf.setDW_LAST_UPDATE_TS(oneRecord.get(46));
-            slf.setDW_LAST_UPDATE_USER_ID(oneRecord.get(47));
-            slf.setDW_LOGICAL_DELETE_IND(oneRecord.get(48));
+            slf.setDW_BATCH_ID(String.valueOf(batchId));
+            slf.setDW_CREATE_TS(ts.toString());
+            slf.setDW_CREATE_USER_ID("create_user_id");
+            slf.setDW_LAST_UPDATE_TS(ts.toString());
+            slf.setDW_LAST_UPDATE_USER_ID("last");
+            slf.setDW_LOGICAL_DELETE_IND("logical");
 
             recordSet.add(slf);
 
@@ -152,6 +161,10 @@ public class WorkScheduleProcessor {
             SHIFT_JOB sj = new SHIFT_JOB();
             XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
             List<String> oneRecord = DataDump.appendResults(result);
+
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            long batchId = System.currentTimeMillis();
+
             sj.setEmployeeWorkSchedule_SK(oneRecord.get(0));
             sj.setSegmentStartTs(oneRecord.get(1));
             sj.setShiftJob_id(oneRecord.get(2));
@@ -159,12 +172,12 @@ public class WorkScheduleProcessor {
             sj.setSegmentId(oneRecord.get(4));
             sj.setSegmentEndTs(oneRecord.get(5));
             sj.setShiftJobTitleNm(oneRecord.get(6));
-            sj.setDW_BATCH_ID(oneRecord.get(7));
-            sj.setDW_CREATE_TS(oneRecord.get(8));
-            sj.setDW_CREATE_USER_ID(oneRecord.get(9));
-            sj.setDW_LAST_UPDATE_TS(oneRecord.get(10));
-            sj.setDW_LAST_UPDATE_USER_ID(oneRecord.get(11));
-            sj.setDW_LOGICAL_DELETE_IND(oneRecord.get(12));
+            sj.setDW_BATCH_ID(String.valueOf(batchId));
+            sj.setDW_CREATE_TS(ts.toString());
+            sj.setDW_CREATE_USER_ID("create_user_id");
+            sj.setDW_LAST_UPDATE_TS(ts.toString());
+            sj.setDW_LAST_UPDATE_USER_ID("last");
+            sj.setDW_LOGICAL_DELETE_IND("logical");
 
             recordSet.add(sj);
 
@@ -182,21 +195,71 @@ public class WorkScheduleProcessor {
         XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
 
         List<String> oneRecord = DataDump.appendResults(result);
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        long batchId = System.currentTimeMillis();
 
         wtb.setEmployeeWorkTime_SK(oneRecord.get(0));
         wtb.setBreakSeqNbr(oneRecord.get(1));
         wtb.setBreakStartTs(oneRecord.get(2));
         wtb.setBreakEndTs(oneRecord.get(3));
-        wtb.setDW_BATCH_ID(oneRecord.get(4));
-        wtb.setDW_CREATE_TS(oneRecord.get(5));
-        wtb.setDW_CREATE_USER_ID(oneRecord.get(6));
-        wtb.setDW_LAST_UPDATE_TS(oneRecord.get(7));
-        wtb.setDW_LAST_UPDATE_USER_ID(oneRecord.get(8));
-        wtb.setDW_LOGICAL_DELETE_IND(oneRecord.get(9));
+        wtb.setDW_BATCH_ID(String.valueOf(batchId));
+        wtb.setDW_CREATE_TS(ts.toString());
+        wtb.setDW_CREATE_USER_ID("create_user_id");
+        wtb.setDW_LAST_UPDATE_TS(ts.toString());
+        wtb.setDW_LAST_UPDATE_USER_ID("last");
+        wtb.setDW_LOGICAL_DELETE_IND("logical");
 
         recordSet.add(wtb);
 
         DataDump.WriteToFile(recordSet,outDir,"WORK_TIME_BREAK.csv");
+
+    }
+        public static void EmployeeWorkScheduleProcess(String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
+
+        List<EMPLOYEE_WORK_SCHEDULE> recordSet = new ArrayList<>();
+
+        XQPreparedExpression exp = new XQueryExecutor().newExp(qFileName);
+
+        EMPLOYEE_WORK_SCHEDULE ews = new EMPLOYEE_WORK_SCHEDULE();
+
+        XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
+
+        List<String> oneRecord = DataDump.appendResults(result);
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        long batchId = System.currentTimeMillis();
+
+
+        ews.setEmployeeWorkSchedule_SK(oneRecord.get(0));
+        ews.setFacility_SK(oneRecord.get(1));
+        ews.setFacility_ID(oneRecord.get(2));
+        ews.setEmployeeId(oneRecord.get(3));
+        ews.setDeptId(oneRecord.get(4));
+        ews.setDeptNm(oneRecord.get(5));
+        ews.setWorkWeekStartDt(oneRecord.get(6));
+        ews.setWorkWeekStartDay(oneRecord.get(7));
+        ews.setWorkWeekEndDt(oneRecord.get(8));
+        ews.setWorkWeekEndDay(oneRecord.get(9));
+        ews.setWorkDt(oneRecord.get(10));
+        ews.setWorkDayOfWk(oneRecord.get(11));
+        ews.setShiftId(oneRecord.get(12));
+        ews.setShiftDt(oneRecord.get(13));
+        ews.setShiftStartTs(oneRecord.get(14));
+        ews.setShiftEndTs(oneRecord.get(15));
+        ews.setShiftDurationHrs(oneRecord.get(16));
+        ews.setJobCd(oneRecord.get(17));
+        ews.setJobTitleNm(oneRecord.get(18));
+        ews.setWageGroupCd(oneRecord.get(19));
+        ews.setWageType(oneRecord.get(20));
+        ews.setDW_BATCH_ID(String.valueOf(batchId));
+        ews.setDW_CREATE_TS(ts.toString());
+        ews.setDW_CREATE_USER_ID("create_user_id");
+        ews.setDW_LAST_UPDATE_TS(ts.toString());
+        ews.setDW_LAST_UPDATE_USER_ID("last");
+        ews.setDW_LOGICAL_DELETE_IND("logical");
+
+        recordSet.add(ews);
+
+        DataDump.WriteToFile(recordSet,outDir,"EMPLOYEE_WORK_SCHEDULE.csv");
 
     }
 }

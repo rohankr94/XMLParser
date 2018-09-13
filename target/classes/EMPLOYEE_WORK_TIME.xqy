@@ -34,24 +34,24 @@ then
 ( data($doc/DeptNm) )
 else ("") ,
 
-if (exists($doc/WorkWeekStartDt))
+if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekStart']//*[local-name()='WorkWeekStartDt']))
 then
-( data($doc/WorkWeekStartDt) )
+( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekStart']//*[local-name()='WorkWeekStartDt']) )
 else ("") ,
 
-if (exists($doc/WorkWeekStartDay))
+if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekStart']//*[local-name()='WorkWeekStartDay']))
 then
-( data($doc/WorkWeekStartDay) )
+( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekStart']//*[local-name()='WorkWeekStartDay']) )
 else ("") ,
 
-if (exists($doc/WorkWeekEndDt))
+if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekEnd']//*[local-name()='WorkWeekEndDt']))
 then
-( data($doc/WorkWeekEndDt) )
+( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekEnd']//*[local-name()='WorkWeekEndDt']) )
 else ("") ,
 
-if (exists($doc/WorkWeekEndDay))
+if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekEnd']//*[local-name()='WorkWeekEndDay']))
 then
-( data($doc/WorkWeekEndDay) )
+( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekEnd']//*[local-name()='WorkWeekEndDay']) )
 else ("") ,
 
 if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='WorkDay']//*[local-name()='WorkDt']))
@@ -110,19 +110,19 @@ then
 else ("") ,
 
 
-if (exists($doc/WageType))
+if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='WageType']))
 then
-( data($doc/WageType) )
+( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='WageType']) )
 else ("") ,
 
-if (exists($doc/AbsenceType))
+if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='AbsenceType']))
 then
-( data($doc/AbsenceType) )
+( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='AbsenceType']) )
 else ("") ,
 
-if (exists($doc/OvertimeInd))
+if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='OvertimeInd']))
 then
-( data($doc/OvertimeInd) )
+( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='OvertimeInd']) )
 else ("") ,
 
 if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='HourTypeId']))

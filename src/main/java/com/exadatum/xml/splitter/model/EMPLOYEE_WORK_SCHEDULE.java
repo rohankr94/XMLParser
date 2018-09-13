@@ -6,6 +6,7 @@ public class EMPLOYEE_WORK_SCHEDULE {
 
     private String EmployeeWorkSchedule_SK;
     private String Facility_SK;
+    private String Facility_ID;
     private String EmployeeId;
     private String DeptId;
     private String DeptNm;
@@ -30,6 +31,14 @@ public class EMPLOYEE_WORK_SCHEDULE {
     private String DW_LAST_UPDATE_TS;
     private String DW_LAST_UPDATE_USER_ID;
     private String DW_LOGICAL_DELETE_IND;
+
+    public String getFacility_ID() {
+        return Facility_ID;
+    }
+
+    public void setFacility_ID(String facility_ID) {
+        Facility_ID = facility_ID;
+    }
 
     public String getEmployeeWorkSchedule_SK() {
         return EmployeeWorkSchedule_SK;
@@ -244,6 +253,7 @@ public class EMPLOYEE_WORK_SCHEDULE {
     public String toString() {
         return EmployeeWorkSchedule_SK + Constants.FIELD_SEPERATOR +
                 Facility_SK + Constants.FIELD_SEPERATOR +
+                Facility_ID + Constants.FIELD_SEPERATOR +
                 EmployeeId + Constants.FIELD_SEPERATOR +
                 DeptId + Constants.FIELD_SEPERATOR +
                DeptNm + Constants.FIELD_SEPERATOR +

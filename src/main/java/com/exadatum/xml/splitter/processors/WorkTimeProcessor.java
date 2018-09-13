@@ -2,7 +2,6 @@ package com.exadatum.xml.splitter.processors;
 
 import com.exadatum.xml.splitter.utils.DataDump;
 import com.exadatum.xml.splitter.utils.XQueryExecutor;
-import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_SCHEDULE;
 import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_TIME;
 import com.exadatum.xml.splitter.model.STORE_LABOR_EMPLOYEE;
 
@@ -37,14 +36,13 @@ public class WorkTimeProcessor {
 
         String workTimeXml = getFile.getProperty("WorkTimeXml");
         String qStoreLaborEmployee = getFile.getProperty("StoreLaborEmployeeQueryFile");
-        String qEmployeeWorkSchedule = getFile.getProperty("EmployeeWorkScheduleQueryFile");
         String qEmployeeWorkTime = getFile.getProperty("EmployeeWorkTimeQueryFile");
         String outDirWorkTime = getFile.getProperty("WorkTime");
 
-        WorkTimeProcessorUtil(workTimeXml, qStoreLaborEmployee, qEmployeeWorkSchedule, qEmployeeWorkTime, outDirWorkTime);
+        WorkTimeProcessorUtil(workTimeXml, qStoreLaborEmployee, qEmployeeWorkTime, outDirWorkTime);
     }
 
-    public static void WorkTimeProcessorUtil(String workTimeXml, String qStoreLaborEmployee, String qEmployeeWorkSchedule,
+    public static void WorkTimeProcessorUtil(String workTimeXml, String qStoreLaborEmployee,
                                              String qEmployeeWorkTime, String outDirWorkTime) throws IOException, XQException {
 
         File f = new File(workTimeXml);
@@ -53,7 +51,6 @@ public class WorkTimeProcessor {
         while ((XMLEntry = br.readLine()) != null) {
             surrogateKey++;
             WorkTimeProcessor.StoreLaborEmployeeProcess(XMLEntry, qStoreLaborEmployee, outDirWorkTime);
-            //WorkTimeProcessor.EmployeeWorkScheduleProcess(XMLEntry, qEmployeeWorkSchedule, outDirWorkTime);
             WorkTimeProcessor.EmployeeWorkTimeProcess(XMLEntry, qEmployeeWorkTime, outDirWorkTime);
         }
 
@@ -86,62 +83,16 @@ public class WorkTimeProcessor {
             sle.setEmployeeAlternateId(oneRecord.get(9).trim());
             sle.setDW_BATCH_ID(String.valueOf(batchId).trim());
             sle.setDW_CREATE_TS(ts.toString().trim());
-            sle.setDW_CREATE_USER_ID("");
+            sle.setDW_CREATE_USER_ID("create");
             sle.setDW_LAST_UPDATE_TS(ts.toString());
-            sle.setDW_LAST_UPDATE_USER_ID("last_update_user_id");
-            sle.setDW_LOGICAL_DELETE_IND("logical_delete_ind");
+            sle.setDW_LAST_UPDATE_USER_ID("last");
+            sle.setDW_LOGICAL_DELETE_IND("logical");
 
             recordSet.add(sle);
 
         DataDump.WriteToFile(recordSet,outDir,"STORE_LABOR_EMPLOYEE.csv");
 
     }
-
-//    public static void EmployeeWorkScheduleProcess(String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
-//
-//        List<EMPLOYEE_WORK_SCHEDULE> recordSet = new ArrayList<>();
-//
-//        XQPreparedExpression exp = new XQueryExecutor().newExp(qFileName);
-//
-//        EMPLOYEE_WORK_SCHEDULE ews = new EMPLOYEE_WORK_SCHEDULE();
-//
-//        XQResultSequence result =  DataDump.getResult(XMLEntry, exp);
-//
-//        List<String> oneRecord = DataDump.appendResults(result);
-//
-//
-//        ews.setEmployeeWorkSchedule_SK(oneRecord.get(0));
-//        ews.setFacility_SK(oneRecord.get(1));
-//        ews.setEmployeeId(oneRecord.get(2));
-//        ews.setDeptId(oneRecord.get(3));
-//        ews.setDeptNm(oneRecord.get(4));
-//        ews.setWorkWeekStartDt(oneRecord.get(5));
-//        ews.setWorkWeekStartDay(oneRecord.get(6));
-//        ews.setWorkWeekEndDt(oneRecord.get(7));
-//        ews.setWorkWeekEndDay(oneRecord.get(8));
-//        ews.setWorkDt(oneRecord.get(9));
-//        ews.setWorkDayOfWk(oneRecord.get(10));
-//        ews.setShiftId(oneRecord.get(11));
-//        ews.setShiftDt(oneRecord.get(12));
-//        ews.setShiftStartTs(oneRecord.get(13));
-//        ews.setShiftEndTs(oneRecord.get(14));
-//        ews.setShiftDurationHrs(oneRecord.get(15));
-//        ews.setJobCd(oneRecord.get(16));
-//        ews.setJobTitleNm(oneRecord.get(17));
-//        ews.setWageGroupCd(oneRecord.get(18));
-//        ews.setWageType(oneRecord.get(19));
-//        ews.setDW_BATCH_ID(oneRecord.get(20));
-//        ews.setDW_CREATE_TS(oneRecord.get(21));
-//        ews.setDW_CREATE_USER_ID(oneRecord.get(22));
-//        ews.setDW_LAST_UPDATE_TS(oneRecord.get(23));
-//        ews.setDW_LAST_UPDATE_USER_ID(oneRecord.get(24));
-//        ews.setDW_LOGICAL_DELETE_IND(oneRecord.get(25));
-//
-//        recordSet.add(ews);
-//
-//        DataDump.WriteToFile(recordSet,outDir,"EMPLOYEE_WORK_SCHEDULE.csv");
-//
-//    }
 
     public static void EmployeeWorkTimeProcess(String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
 
@@ -193,10 +144,10 @@ public class WorkTimeProcessor {
         ewt.setProjectDsc(oneRecord.get(29));
         ewt.setDW_BATCH_ID(String.valueOf(batchId));
         ewt.setDW_CREATE_TS(ts.toString());
-        ewt.setDW_CREATE_USER_ID("create_user_id");
+        ewt.setDW_CREATE_USER_ID("create");
         ewt.setDW_LAST_UPDATE_TS(ts.toString());
-        ewt.setDW_LAST_UPDATE_USER_ID("last_update_user_id");
-        ewt.setDW_LOGICAL_DELETE_IND("logical_delete_ind");
+        ewt.setDW_LAST_UPDATE_USER_ID("last");
+        ewt.setDW_LOGICAL_DELETE_IND("logical");
 
 
         recordSet.add(ewt);
