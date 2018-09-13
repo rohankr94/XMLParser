@@ -25,9 +25,9 @@ then
 ( data($doc//*[local-name()='GetEmployeeWorkSchedule']//*[local-name()='WorkScheduleData']//*[local-name()='WorkSchedule']//*[local-name()='Employee']//*[local-name()='EmployeeId']) )
 else ("") ,
 
-if (exists($doc//*[local-name()='GetEmployeeWorkSchedule']//*[local-name()='WorkScheduleData']//*[local-name()='WorkLocation']//*[local-name()='DeptId']))
+if (exists($doc//*[local-name()='GetEmployeeWorkSchedule']//*[local-name()='WorkScheduleData']//*[local-name()='WorkLocation']//*[local-name()='DepartmentId']))
 then
-( data($doc//*[local-name()='GetEmployeeWorkSchedule']//*[local-name()='WorkScheduleData']//*[local-name()='WorkLocation']//*[local-name()='DeptId']) )
+( data($doc//*[local-name()='GetEmployeeWorkSchedule']//*[local-name()='WorkScheduleData']//*[local-name()='WorkLocation']//*[local-name()='DepartmentId']) )
 else ("") ,
 
 if (exists($doc/DeptNm))
