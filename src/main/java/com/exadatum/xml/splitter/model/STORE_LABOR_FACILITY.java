@@ -35,8 +35,9 @@ public class STORE_LABOR_FACILITY {
     private String LongitudeDegree;
     private String TimeZoneCd;
     private String PhoneNbr;
-    private String axNbr;
+    private String FaxNbr;
     private String FacilityOpenDt;
+    private String FacilityCloseDt;
     private String FacilityCloseAnnouncedDt;
     private String FacilityCurrentStatusCd;
     private String TierCompanyCd;
@@ -302,12 +303,12 @@ public class STORE_LABOR_FACILITY {
         PhoneNbr = phoneNbr;
     }
 
-    public String getAxNbr() {
-        return axNbr;
+    public String getFaxNbr() {
+        return FaxNbr;
     }
 
-    public void setAxNbr(String axNbr) {
-        this.axNbr = axNbr;
+    public void setFaxNbr(String faxNbr) {
+        this.FaxNbr = faxNbr;
     }
 
     public String getFacilityOpenDt() {
@@ -446,6 +447,14 @@ public class STORE_LABOR_FACILITY {
         this.DW_LOGICAL_DELETE_IND = DW_LOGICAL_DELETE_IND;
     }
 
+    public String getFacilityCloseDt() {
+        return FacilityCloseDt;
+    }
+
+    public void setFacilityCloseDt(String facilityCloseDt) {
+        FacilityCloseDt = facilityCloseDt;
+    }
+
     @Override
     public String toString() {
         return
@@ -480,8 +489,9 @@ public class STORE_LABOR_FACILITY {
                  LongitudeDegree + Constants.FIELD_SEPERATOR +
                  TimeZoneCd + Constants.FIELD_SEPERATOR +
                  PhoneNbr + Constants.FIELD_SEPERATOR +
-                axNbr + Constants.FIELD_SEPERATOR +
+                        FaxNbr + Constants.FIELD_SEPERATOR +
                  FacilityOpenDt + Constants.FIELD_SEPERATOR +
+                        FacilityCloseDt + Constants.FIELD_SEPERATOR +
                  FacilityCloseAnnouncedDt + Constants.FIELD_SEPERATOR +
                  FacilityCurrentStatusCd + Constants.FIELD_SEPERATOR +
                  TierCompanyCd + Constants.FIELD_SEPERATOR +

@@ -1,6 +1,7 @@
 package com.exadatum.xml.splitter.processors;
 
 import com.exadatum.xml.splitter.utils.DataDump;
+import com.exadatum.xml.splitter.utils.SurrogateKey;
 import com.exadatum.xml.splitter.utils.XQueryExecutor;
 import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_TIME;
 import com.exadatum.xml.splitter.model.STORE_LABOR_EMPLOYEE;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 public class WorkTimeProcessor {
 
-    public static long surrogateKey = 0;
+    //public static long surrogateKey = 0;
 
     public static void main(String[] args) throws IOException {
         try {
@@ -42,20 +43,22 @@ public class WorkTimeProcessor {
         String qEmployeeWorkTime = getFile.getProperty("EmployeeWorkTimeQueryFile");
         String outDirWorkTime = getFile.getProperty("WorkTime");
 
-        WorkTimeProcessorUtil(workTimeXml, qStoreLaborEmployee, qEmployeeWorkTime, outDirWorkTime);
+        WorkTimeProcessorUtil(args,workTimeXml, qStoreLaborEmployee, qEmployeeWorkTime, outDirWorkTime);
     }
 
-    public static void WorkTimeProcessorUtil(String workTimeXml, String qStoreLaborEmployee,
+    public static void WorkTimeProcessorUtil(String[] args,String workTimeXml, String qStoreLaborEmployee,
                                              String qEmployeeWorkTime, String outDirWorkTime) throws IOException, XQException {
 
         File f = new File(workTimeXml);
         BufferedReader br = new BufferedReader(new FileReader(f));
         String XMLEntry;
+        int surrogateKey = new SurrogateKey().getSk(args);
         while ((XMLEntry = br.readLine()) != null) {
             surrogateKey++;
             WorkTimeProcessor.StoreLaborEmployeeProcess(XMLEntry, qStoreLaborEmployee, outDirWorkTime);
-            WorkTimeProcessor.EmployeeWorkTimeProcess(XMLEntry, qEmployeeWorkTime, outDirWorkTime);
+            WorkTimeProcessor.EmployeeWorkTimeProcess(surrogateKey,XMLEntry, qEmployeeWorkTime, outDirWorkTime);
         }
+        SurrogateKey.putSk(surrogateKey,args);
 
     }
 
@@ -97,7 +100,7 @@ public class WorkTimeProcessor {
 
     }
 
-    public static void EmployeeWorkTimeProcess(String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
+    public static void EmployeeWorkTimeProcess(int surrogateKey,String XMLEntry, String qFileName, String outDir) throws XQException, IOException {
 
         List<EMPLOYEE_WORK_TIME> recordSet = new ArrayList<>();
 
@@ -172,6 +175,7 @@ public class WorkTimeProcessor {
         }
         return format2;
     }
+
 
 
 }

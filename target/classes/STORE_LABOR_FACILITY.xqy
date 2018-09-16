@@ -39,6 +39,11 @@ then
 ( data ($doc//*[local-name()='GetEmployeeWorkSchedule']//*[local-name()='WorkScheduleData']//*[local-name()='WorkSchedule']//*[local-name()='WorkLocation']//*[local-name()='ParentFacilityId']) )
 else ("") ,
 
+if (exists($doc/CorpId))
+then
+( data($doc/CorpId) )
+else ("") ,
+
 if (exists($doc/CorpNm))
 then
 ( data($doc/CorpNm) )
@@ -164,19 +169,20 @@ then
 ( data ($doc//*[local-name()='GetEmployeeWorkSchedule']//*[local-name()='WorkScheduleData']//*[local-name()='WorkSchedule']//*[local-name()='WorkLocation']//*[local-name()='FacilityAddress']//*[local-name()='PhoneNbr']) )
 else ("") ,
 
-if (exists($doc/axNbr))
+if (exists($doc/FaxNbr))
 then
-( data($doc/axNbr) )
+( data($doc/FaxNbr) )
 else ("") ,
 
-if (exists($doc/axNbr))
-then
-( data($doc/axNbr) )
-else ("") ,
 
 if (exists($doc/FacilityOpenDt))
 then
 ( data($doc/FacilityOpenDt) )
+else ("") ,
+
+if (exists($doc/FacilityCloseDt))
+then
+( data($doc/FacilityCloseDt) )
 else ("") ,
 
 if (exists($doc/FacilityCloseAnnouncedDt))
