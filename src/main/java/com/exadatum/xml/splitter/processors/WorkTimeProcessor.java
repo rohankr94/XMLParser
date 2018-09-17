@@ -1,7 +1,7 @@
 package com.exadatum.xml.splitter.processors;
 
 import com.exadatum.xml.splitter.utils.DataDump;
-import com.exadatum.xml.splitter.utils.SurrogateKey;
+import com.exadatum.xml.splitter.utils.SurrogateKeyGenerator;
 import com.exadatum.xml.splitter.utils.XQueryExecutor;
 import com.exadatum.xml.splitter.model.EMPLOYEE_WORK_TIME;
 import com.exadatum.xml.splitter.model.STORE_LABOR_EMPLOYEE;
@@ -52,13 +52,13 @@ public class WorkTimeProcessor {
         File f = new File(workTimeXml);
         BufferedReader br = new BufferedReader(new FileReader(f));
         String XMLEntry;
-        int surrogateKey = new SurrogateKey().getSk(args);
+        int surrogateKey = new SurrogateKeyGenerator().getSk(args);
         while ((XMLEntry = br.readLine()) != null) {
             surrogateKey++;
             WorkTimeProcessor.StoreLaborEmployeeProcess(XMLEntry, qStoreLaborEmployee, outDirWorkTime);
             WorkTimeProcessor.EmployeeWorkTimeProcess(surrogateKey,XMLEntry, qEmployeeWorkTime, outDirWorkTime);
         }
-        SurrogateKey.putSk(surrogateKey,args);
+        SurrogateKeyGenerator.putSk(surrogateKey,args);
 
     }
 
