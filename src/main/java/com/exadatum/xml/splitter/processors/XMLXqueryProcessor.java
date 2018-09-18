@@ -17,8 +17,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * Processing of XML file using XQuery java api and
- * dumps the output to a file.
+ * Processing of XML file using XQuery java api.
  *
  */
 
@@ -46,7 +45,8 @@ public class XMLXqueryProcessor {
      */
 
     private void execute(String[] args) throws XQException, IOException {
-
+        int surrogateKey = 0;
+        String skPath = null;
         Scanner s = new Scanner(new File(args[0]));
         while (s.hasNextLine()) {
             String[] line = s.nextLine().split(Pattern.quote(Constants.FIELD_SEPERATOR));
@@ -55,10 +55,11 @@ public class XMLXqueryProcessor {
             String outputDirectory = line[2].trim();
             String[] filePath = xqueryFile.split(Constants.FILE_SEPERATOR);
             String fileName = filePath[filePath.length - 1].split(Pattern.quote("."))[0];
-            String skPath = outputDirectory + Constants.FILE_SEPERATOR + fileName + Constants.SK_FILE_EXTENSTION ;
-
-            processXMLRecords(xmlFile, xqueryFile, outputDirectory, fileName+Constants.FILE_EXTENSTION, skPath);
+            skPath = outputDirectory + Constants.FILE_SEPERATOR + Constants.SURROGATE_KEY_FILE;
+            surrogateKey = new SurrogateKeyGenerator().getSk(skPath);
+            surrogateKey = processXMLRecords(xmlFile, xqueryFile, outputDirectory, fileName+Constants.FILE_EXTENSTION, skPath, surrogateKey);
         }
+        new SurrogateKeyGenerator().putSk(surrogateKey,skPath);
     }
 
     /**
@@ -73,18 +74,19 @@ public class XMLXqueryProcessor {
      *
      */
 
-    private void processXMLRecords(String sourceXML, String sourceXqueryFile, String outDir, String tableName, String skPath) throws IOException, XQException {
+    private int processXMLRecords(String sourceXML, String sourceXqueryFile, String outDir, String tableName, String skPath, int sk) throws IOException, XQException {
         File f = new File(sourceXML);
         List<String> recordSet = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(f));
         String XMLEntry;
-        int sk = new SurrogateKeyGenerator().getSk(skPath);
+        //int sk = new SurrogateKeyGenerator().getSk(skPath);
         while ((XMLEntry = br.readLine()) != null) {
             sk++;
             processXMLRecord(XMLEntry, sourceXqueryFile, outDir, tableName, recordSet, sk, skPath);
         }
         FileUtils.flushRecordsToFIle(recordSet, outDir, tableName);
-        new SurrogateKeyGenerator().putSk(sk,skPath);
+        //new SurrogateKeyGenerator().putSk(sk,skPath);
+        return sk;
     }
 
     /**

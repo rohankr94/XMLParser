@@ -55,7 +55,7 @@ public interface FileUtils {
 
     static <T> void flushRecordsToFIle(List<T> recordSet, String OutDir, String outFileName) throws IOException {
 
-        File file = new File(OutDir + "/" + outFileName);
+        File file = new File(OutDir + Constants.FILE_SEPERATOR + outFileName);
         file.getParentFile().mkdirs();
         FileWriter outFile = new FileWriter(file, true);
         BufferedWriter bw = new BufferedWriter(outFile);

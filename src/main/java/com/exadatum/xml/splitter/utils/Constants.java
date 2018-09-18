@@ -9,6 +9,6 @@ public interface Constants {
     String FIELD_SEPERATOR = "|";
     int LIST_THRESHHOLD = 1000000;
     String FILE_EXTENSTION = ".data";
-    String SK_FILE_EXTENSTION = "_SK.txt";
+    String SURROGATE_KEY_FILE = "Surrogate_Key.txt";
     String FILE_SEPERATOR = "/";
 }
