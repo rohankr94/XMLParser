@@ -46,26 +46,27 @@ public class XMLXqueryProcessor {
 
     private void execute(String[] args) throws XQException, IOException {
         int surrogateKey = 0;
-        String skPath = null;
+        String surrogatekeyFilePath = null;
         Scanner s = new Scanner(new File(args[0]));
         while (s.hasNextLine()) {
             String[] line = s.nextLine().split(Pattern.quote(Constants.FIELD_SEPERATOR));
             String xmlFile = line[0].trim();
             String xqueryFile = line[1].trim();
             String outputDirectory = line[2].trim();
-            String[] filePath = xqueryFile.split(Constants.FILE_SEPERATOR);
-            String fileName = filePath[filePath.length - 1].split(Pattern.quote("."))[0];
-            skPath = outputDirectory + Constants.FILE_SEPERATOR + Constants.SURROGATE_KEY_FILE;
-            surrogateKey = new SurrogateKeyGenerator().getSk(skPath);
-            surrogateKey = processXMLRecords(xmlFile, xqueryFile, outputDirectory, fileName+Constants.FILE_EXTENSTION, skPath, surrogateKey);
+            FileUtils.createDirectory(outputDirectory);
+            String outputFile = FileUtils.getFileName(xqueryFile);
+            String surrogatekeyFileName = FileUtils.getFileName(xmlFile);
+            surrogatekeyFilePath = outputDirectory + Constants.FILE_SEPERATOR + surrogatekeyFileName + Constants.SURROGATE_KEY_FILE;
+            surrogateKey = new SurrogateKeyGenerator().getSurrogateKey(surrogatekeyFilePath);
+            surrogateKey = processXMLRecords(xmlFile, xqueryFile, outputDirectory, outputFile+Constants.FILE_EXTENSTION, surrogatekeyFilePath, surrogateKey);
         }
-        new SurrogateKeyGenerator().putSk(surrogateKey,skPath);
+        new SurrogateKeyGenerator().putSurrogateKey(surrogateKey,surrogatekeyFilePath);
     }
 
     /**
      *
      * @param sourceXML
-     * @param sourceXqueryFile
+     * @param xqueryFile
      * @param outDir
      * @param tableName
      * @param skPath
@@ -74,42 +75,40 @@ public class XMLXqueryProcessor {
      *
      */
 
-    private int processXMLRecords(String sourceXML, String sourceXqueryFile, String outDir, String tableName, String skPath, int sk) throws IOException, XQException {
-        File f = new File(sourceXML);
+    private int processXMLRecords(String sourceXML, String xqueryFile, String outDir, String tableName, String skPath, int surrogateKey) throws IOException, XQException {
+        File xmlSourceFile = new File(sourceXML);
         List<String> recordSet = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new FileReader(f));
+        BufferedReader br = new BufferedReader(new FileReader(xmlSourceFile));
         String XMLEntry;
-        //int sk = new SurrogateKeyGenerator().getSk(skPath);
         while ((XMLEntry = br.readLine()) != null) {
-            sk++;
-            processXMLRecord(XMLEntry, sourceXqueryFile, outDir, tableName, recordSet, sk, skPath);
+            surrogateKey++;
+            processXMLRecord(XMLEntry, xqueryFile, outDir, tableName, recordSet, surrogateKey, skPath);
         }
         FileUtils.flushRecordsToFIle(recordSet, outDir, tableName);
-        //new SurrogateKeyGenerator().putSk(sk,skPath);
-        return sk;
+        return surrogateKey;
     }
 
     /**
      *
      * @param XMLEntry
-     * @param qFileName
+     * @param xqueryFile
      * @param outDir
      * @param tableName
      * @param recordSet
-     * @param sk
+     * @param surrogateKey
      * @param skPath
      * Processes each xml record using XQuery and stores the record in string.
      * Each record is then pushed to a list.
      */
 
-    private void processXMLRecord(String XMLEntry, String qFileName, String outDir, String tableName, List<String> recordSet, int sk, String skPath) throws XQException, IOException {
+    private void processXMLRecord(String XMLEntry, String xqueryFile, String outDir, String tableName, List<String> recordSet, int surrogateKey, String skPath) throws XQException, IOException {
 
-        XQPreparedExpression exp = new XQueryExecutor().newExp(qFileName);
+        XQPreparedExpression preparedExpression = new XQueryExecutor().newExpression(xqueryFile);
 
-        XQResultSequence result = FileUtils.getResult(XMLEntry, exp);
+        XQResultSequence resultSequence = FileUtils.getResult(XMLEntry, preparedExpression);
 
-        List<String> oneRecord = FileUtils.getColumnsFromXMLRecord(result);
-        String record = String.valueOf(sk) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, oneRecord);
+        List<String> singleRecord = FileUtils.getColumnsFromXMLRecord(resultSequence);
+        String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord);
         recordSet.add(record);
 
         if (recordSet.size() == Constants.LIST_THRESHHOLD) {

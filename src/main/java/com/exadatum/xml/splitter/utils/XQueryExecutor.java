@@ -20,16 +20,16 @@ public class XQueryExecutor {
      * Gives the prepared expression to execute the query.
      */
 
-    public XQPreparedExpression  newExp(String fileName) throws IOException, XQException {
+    public XQPreparedExpression newExpression(String fileName) throws IOException, XQException {
 
         InputStream inputStream = new FileInputStream(new File(fileName));
 
-        XQDataSource ds = new SaxonXQDataSource();
-        XQConnection conn = ds.getConnection();
+        XQDataSource dataSource = new SaxonXQDataSource();
+        XQConnection connection = dataSource.getConnection();
 
-        XQPreparedExpression exp = conn.prepareExpression(inputStream);
+        XQPreparedExpression preparedExpression = connection.prepareExpression(inputStream);
         inputStream.close();
 
-        return exp;
+        return preparedExpression;
     }
 }

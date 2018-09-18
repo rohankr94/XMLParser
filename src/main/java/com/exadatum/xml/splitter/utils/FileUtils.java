@@ -73,4 +73,17 @@ public interface FileUtils {
         }
         csvWriter.close();
     }
+
+    static void createDirectory(String dirName){
+
+        File outputDir = new File(dirName);
+        outputDir.mkdirs();
+    }
+
+    static String getFileName(String fileName){
+        String[] outputFilePath = fileName.split(Constants.FILE_SEPERATOR);
+        String outputFile = outputFilePath[outputFilePath.length - 1].split(Pattern.quote("."))[0];
+        return outputFile;
+    }
+
 }
