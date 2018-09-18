@@ -59,7 +59,7 @@ static         List<WorkSchedule> recordSet = new ArrayList<>();
             WorkScheduleProcessor.EmployeeWorkScheduleProcess(XMLEntry, qEmployeeWorkSchedule, outDirWorkSchedule);
         }
 
-        FileUtils.flushRecordsToFIle(recordSet, outDirWorkSchedule, "EMPLOYEE_WORK_SCHEDULE.csv");
+        FileUtils.flushRecordsToFile(recordSet, outDirWorkSchedule, "EMPLOYEE_WORK_SCHEDULE.csv");
 
     }
 

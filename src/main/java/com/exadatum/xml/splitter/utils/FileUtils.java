@@ -53,7 +53,7 @@ public interface FileUtils {
      * dumps the output to a file
      */
 
-    static <T> void flushRecordsToFIle(List<T> recordSet, String OutDir, String outFileName) throws IOException {
+    static <T> void flushRecordsToFile(List<T> recordSet, String OutDir, String outFileName) throws IOException {
 
         File file = new File(OutDir + Constants.FILE_SEPERATOR + outFileName);
         file.getParentFile().mkdirs();
@@ -78,6 +78,7 @@ public interface FileUtils {
 
         File outputDir = new File(dirName);
         outputDir.mkdirs();
+
     }
 
     static String getFileName(String fileName){
