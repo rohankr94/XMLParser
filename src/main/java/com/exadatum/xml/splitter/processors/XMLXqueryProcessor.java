@@ -69,20 +69,20 @@ public class XMLXqueryProcessor {
      * @param xqueryFile
      * @param outDir
      * @param tableName
-     * @param skPath
+     * @param surrogatekeyPath
      * Reads each xml record and pass it to processXMLRecord().
      * Dumps the list of record to its corresponding file.
      *
      */
 
-    private int processXMLRecords(String sourceXML, String xqueryFile, String outDir, String tableName, String skPath, int surrogateKey) throws IOException, XQException {
+    private int processXMLRecords(String sourceXML, String xqueryFile, String outDir, String tableName, String surrogatekeyPath, int surrogateKey) throws IOException, XQException {
         File xmlSourceFile = new File(sourceXML);
         List<String> recordSet = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(xmlSourceFile));
         String XMLEntry;
         while ((XMLEntry = br.readLine()) != null) {
             surrogateKey++;
-            processXMLRecord(XMLEntry, xqueryFile, outDir, tableName, recordSet, surrogateKey, skPath);
+            processXMLRecord(XMLEntry, xqueryFile, outDir, tableName, recordSet, surrogateKey, surrogatekeyPath);
         }
         FileUtils.flushRecordsToFIle(recordSet, outDir, tableName);
         return surrogateKey;
