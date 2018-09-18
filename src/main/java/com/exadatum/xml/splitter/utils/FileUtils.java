@@ -7,12 +7,17 @@ import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import java.io.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public interface FileUtils {
+
+    /**
+     * @param XMLEntry
+     * @param exp
+     * Executes the query
+     */
 
     static XQResultSequence getResult(String XMLEntry, XQPreparedExpression exp) throws XQException, IOException {
 
@@ -22,6 +27,12 @@ public interface FileUtils {
         return result;
     }
 
+    /**
+     *
+     * @param result
+     * @return list
+     * inserts the result of executed query in a list of string.
+     */
     static List<String> getColumnsFromXMLRecord(XQResultSequence result) throws XQException {
 
         List<String> oneRecord = new ArrayList<String>();
@@ -32,6 +43,15 @@ public interface FileUtils {
         }
         return oneRecord;
     }
+
+    /**
+     *
+     * @param recordSet
+     * @param OutDir
+     * @param outFileName
+     * @param <T>
+     * dumps the output to a file
+     */
 
     static <T> void flushRecordsToFIle(List<T> recordSet, String OutDir, String outFileName) throws IOException {
 

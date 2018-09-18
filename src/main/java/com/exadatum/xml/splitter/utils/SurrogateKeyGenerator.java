@@ -1,21 +1,29 @@
 package com.exadatum.xml.splitter.utils;
 
 import java.io.*;
-import java.util.Properties;
+
+/**
+ * gets and sets the surrogate key value.
+ */
+
 
 public class SurrogateKeyGenerator {
 
-    public int getSk(String[] args) throws IOException {
+    /**
+     *
+     * @param fileName
+     * @return surrogate key value
+     * Checks if file exists then return surrogate key value from it.
+     * else creates the file.
+     *
+     */
+
+    public int getSk(String fileName) throws IOException {
         int sk = 0;
-        FileReader readProperty = new FileReader(args[0]);
-        Properties getFile = new Properties();
-        getFile.load(readProperty);
-        String loc = getFile.getProperty("SurrogateFilelocation");
         String line;
-        readProperty.close();
-        File F = new File(loc);
+        File F = new File(fileName);
         if(F.exists() && !F.isDirectory()){
-            BufferedReader br = new BufferedReader(new FileReader(loc));
+            BufferedReader br = new BufferedReader(new FileReader(F));
             while((line = br.readLine()) != null){
                 sk = Integer.parseInt(line);
             }
@@ -23,25 +31,26 @@ public class SurrogateKeyGenerator {
         }
         else{
             F.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(loc));
-            bw.write(sk);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+            bw.write(Integer.toString(sk));
             bw.close();
         }
 
         return sk;
     }
 
-    public static void putSk(int sk,String[] args) throws IOException {
+    /**
+     *
+     * @param sk
+     * @param fileName
+     * Writes the surrogate key value to the file.
+     */
 
+    public void putSk(int sk, String fileName) throws IOException {
 
-        FileReader readProperty = new FileReader(args[0]);
-        Properties getFile = new Properties();
-        getFile.load(readProperty);
-        String loc = getFile.getProperty("SurrogateFilelocation");
-        File F = new File(loc);
-        F.delete();
+        File F = new File(fileName);
         F.createNewFile();
-        BufferedWriter bw = new BufferedWriter(new FileWriter(loc));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(F));
         bw.write(String.valueOf(sk));
         bw.close();
     }

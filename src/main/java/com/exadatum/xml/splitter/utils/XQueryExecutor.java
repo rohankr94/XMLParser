@@ -13,6 +13,13 @@ import java.io.InputStream;
 
 public class XQueryExecutor {
 
+    /**
+     *
+     * @param fileName
+     * @return exp
+     * Gives the prepared expression to execute the query.
+     */
+
     public XQPreparedExpression  newExp(String fileName) throws IOException, XQException {
 
         InputStream inputStream = new FileInputStream(new File(fileName));
