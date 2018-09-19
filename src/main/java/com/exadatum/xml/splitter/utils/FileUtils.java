@@ -61,7 +61,7 @@ public interface FileUtils {
 
     static <T> void flushRecordsToFile(List<T> recordSet, String OutDir, String outFileName) throws IOException {
 
-        File file = new File(OutDir + Constants.FILE_SEPERATOR + outFileName);
+        File file = new File(OutDir + Constants.FILE_PATH_SEPERATOR + outFileName);
         file.getParentFile().mkdirs();
         FileWriter outFile = new FileWriter(file, true);
         BufferedWriter bw = new BufferedWriter(outFile);
@@ -88,7 +88,7 @@ public interface FileUtils {
     }
 
     static String getFileName(String fileName) {
-        String[] outputFilePath = fileName.split(Constants.FILE_SEPERATOR);
+        String[] outputFilePath = fileName.split(Constants.FILE_PATH_SEPERATOR);
         String outputFile = outputFilePath[outputFilePath.length - 1].split(Pattern.quote("."))[0].split("-")[0];
         return outputFile;
     }

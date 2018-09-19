@@ -14,7 +14,11 @@ public class SurrogateKeyGenerator {
 
     public static void initialize(String xmlFile, String outputDirectory) throws IOException {
         String surrogatekeyFileName = FileUtils.getFileName(xmlFile);
-        filename = outputDirectory + Constants.FILE_SEPERATOR + surrogatekeyFileName + Constants.SURROGATE_KEY_FILE;
+        int length = outputDirectory.split("/").length;
+        int originalLength = outputDirectory.length() - outputDirectory.split("/")[length - 1].length() - 1;
+        outputDirectory = outputDirectory.substring(0, originalLength);
+        FileUtils.createDirectory(outputDirectory);
+        filename = outputDirectory + Constants.FILE_PATH_SEPERATOR + surrogatekeyFileName + Constants.SURROGATE_KEY_FILE;
         surrogateKey = getSurrogateKey(filename);
     }
 
