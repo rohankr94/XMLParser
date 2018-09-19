@@ -17,6 +17,7 @@ public class SurrogateKeyGenerator {
         int length = outputDirectory.split("/").length;
         int originalLength = outputDirectory.length() - outputDirectory.split("/")[length - 1].length() - 1;
         outputDirectory = outputDirectory.substring(0, originalLength);
+        FileUtils.createDirectory(outputDirectory);
         filename = outputDirectory + Constants.FILE_PATH_SEPERATOR + surrogatekeyFileName + Constants.SURROGATE_KEY_FILE;
         surrogateKey = getSurrogateKey(filename);
     }
