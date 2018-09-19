@@ -21,8 +21,8 @@ public class XqueryProcessor {
 
     private String xqueryFile;
     private List<String> recordList;
-    private String fileName = "";
-    private String outDir = "";
+    private String fileName;
+    private String outDir;
 
     /**
      *
@@ -45,7 +45,7 @@ public class XqueryProcessor {
 
     /**
      *
-     * @param XMLEntry
+     * @param xmlRecord
      * @param surrogateKey
      * @throws XQException
      * @throws IOException
@@ -56,10 +56,10 @@ public class XqueryProcessor {
      */
 
 
-    public void processXMLRecord(String XMLEntry, int surrogateKey) throws XQException, IOException {
+    public void processXMLRecord(String xmlRecord, int surrogateKey) throws XQException, IOException {
         XQPreparedExpression preparedExpression = new XQueryExecutor().newExpression(this.xqueryFile);
 
-        XQResultSequence resultSequence = FileUtils.getResult(XMLEntry, preparedExpression);
+        XQResultSequence resultSequence = FileUtils.getResult(xmlRecord, preparedExpression);
 
         List<String> singleRecord = FileUtils.getColumnsFromXMLRecord(resultSequence);
         String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord);

@@ -16,10 +16,9 @@ import java.util.Scanner;
  */
 
 public class XMLProcessor {
-    static int surrogateKey;
 
     /**
-     * @param args has xml file name,file path of xquery list,output directory
+     * @param args - has xml file name,file path of xquery list,output directory
      * @throws IOException
      */
 
@@ -33,57 +32,45 @@ public class XMLProcessor {
     }
 
     /**
-     *
-     * @param args has xml file name,file path of xquery list,output directory
+     * @param args - has xml file name,file path of xquery list,output directory
      * @throws XQException
-     * @throws IOException
-     * a list of XqueryProcessors class for each xquery file which is
-     * passed to processXMLRecords().
-     *
+     * @throws IOException a list of XqueryProcessors class for each xquery file which is
+     *                     passed to processXMLRecords().
      */
 
     private void execute(String[] args) throws XQException, IOException {
-        List<XqueryProcessor> xqueryProcessors = new ArrayList<>();
-
-        String surrogatekeyFilePath = null;
-
         String xmlFile = args[0];
         String outputDirectory = args[2];
         Scanner s = new Scanner(new File(args[1]));
+        SurrogateKeyGenerator.intitialize(xmlFile, outputDirectory);
+        List<XqueryProcessor> xqueryProcessors = new ArrayList<>();
         while (s.hasNextLine()) {
             String xqueryFile = s.nextLine();
             XqueryProcessor xqueryProcessor = new XqueryProcessor(outputDirectory, xqueryFile);
             xqueryProcessors.add(xqueryProcessor);
         }
-        String surrogatekeyFileName = FileUtils.getFileName(xmlFile);
-        surrogatekeyFilePath = outputDirectory + Constants.FILE_SEPERATOR + surrogatekeyFileName + Constants.SURROGATE_KEY_FILE;
-        surrogateKey = new SurrogateKeyGenerator().getSurrogateKey(surrogatekeyFilePath);
         processXMLRecords(xmlFile, xqueryProcessors, outputDirectory);
-        System.out.println("NEW SURROGATE KEY " + surrogateKey);
-        new SurrogateKeyGenerator().putSurrogateKey(surrogateKey, surrogatekeyFilePath);
+        SurrogateKeyGenerator.updateSurrogateKey();
+        System.out.println(SurrogateKeyGenerator.surrogateKey);
     }
 
     /**
-     *
      * @param xmlFile
      * @param xqueryProcessors
      * @param outputDirectory
      * @throws IOException
-     * @throws XQException
-     *
-     * For each element in XqueryProcessor list, query is executed and and dumped to its corresponding file.
-     *
+     * @throws XQException For each element in XqueryProcessor list, query is executed and and dumped to its corresponding file.
      */
 
     private void processXMLRecords(String xmlFile, List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws IOException, XQException {
 
         File xmlSourceFile = new File(xmlFile);
         BufferedReader br = new BufferedReader(new FileReader(xmlSourceFile));
-        String XMLEntry;
-        while ((XMLEntry = br.readLine()) != null) {
-            surrogateKey++;
+        String xmlRecord;
+        while ((xmlRecord = br.readLine()) != null) {
+            SurrogateKeyGenerator.surrogateKey++;
             for (XqueryProcessor xqueryProcessor : xqueryProcessors) {
-                xqueryProcessor.processXMLRecord(XMLEntry, surrogateKey);
+                xqueryProcessor.processXMLRecord(xmlRecord, SurrogateKeyGenerator.surrogateKey);
             }
         }
         flushDataToFile(xqueryProcessors, outputDirectory);
@@ -91,13 +78,9 @@ public class XMLProcessor {
     }
 
     /**
-     *
      * @param xqueryProcessors
      * @param outputDirectory
-     * @throws IOException
-     *
-     * this function dumps the data to the file.
-     *
+     * @throws IOException this function dumps the data to the file.
      */
 
     private void flushDataToFile(List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws IOException {
