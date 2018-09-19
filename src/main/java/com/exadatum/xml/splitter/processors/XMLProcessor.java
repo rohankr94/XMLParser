@@ -20,7 +20,6 @@ public class XMLProcessor {
     private static final Logger LOG = LoggerFactory
             .getLogger(XMLProcessor.class);
 
-
     /**
      * @param args - has xml file name,file path of xquery list,output directory
      */
@@ -39,12 +38,14 @@ public class XMLProcessor {
     /**
      * @param args - has xml file name,file path of xquery list,output directory
      * @throws XMLPasrerException
+     *
+     * Takes each query file and adds it to {@link XqueryProcessor} list.
+     *
      */
 
     private void execute(String[] args) throws XMLPasrerException {
-
-        LOG.info("initializing properties");
         try {
+            LOG.info("initializing properties");
             String xmlFile = args[0];
             String outputDirectory = args[2];
             Scanner s = new Scanner(new File(args[1]));
@@ -66,10 +67,14 @@ public class XMLProcessor {
     }
 
     /**
+     *
      * @param xmlFile
      * @param xqueryProcessors
      * @param outputDirectory
      * @throws XMLPasrerException
+     *
+     * for each query file in {@link XqueryProcessor} list query is executed and data is dumped.
+     *
      */
 
     private void processXMLRecords(String xmlFile, List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws XMLPasrerException {
@@ -91,7 +96,7 @@ public class XMLProcessor {
             flushDataToFile(xqueryProcessors, outputDirectory);
             LOG.info("Successfully flushed  processed data to file ");
         } catch (Exception xmlParserException) {
-            throw new XMLPasrerException("unable to parse record " + xmlRecord);
+            throw new XMLPasrerException("unable to parse records " + xmlRecord);
         }
 
     }
@@ -99,13 +104,13 @@ public class XMLProcessor {
     /**
      * @param xqueryProcessors
      * @param outputDirectory
-     * @throws XMLPasrerException this function dumps the data to the file.
+     * @throws XMLPasrerException
+     * this function dumps the data to the file.
      */
 
     private void flushDataToFile(List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws XMLPasrerException {
-
-        LOG.info("Flushing the result to output file");
         try {
+            LOG.info("Flushing the result to output file");
             for (XqueryProcessor xqueryProcessor : xqueryProcessors) {
                 xqueryProcessor.flushToFile();
             }

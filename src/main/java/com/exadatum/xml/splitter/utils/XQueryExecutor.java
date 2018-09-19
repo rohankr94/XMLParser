@@ -1,5 +1,6 @@
 package com.exadatum.xml.splitter.utils;
 
+import com.exadatum.xml.splitter.exceptions.XMLPasrerException;
 import com.exadatum.xml.splitter.processors.XqueryProcessor;
 import com.saxonica.xqj.SaxonXQDataSource;
 import org.slf4j.Logger;
@@ -26,16 +27,21 @@ public class XQueryExecutor {
      * Gives the prepared expression to execute the query.
      */
 
-    public XQPreparedExpression newExpression(String fileName) throws IOException, XQException {
+    public XQPreparedExpression newExpression(String fileName) throws XMLPasrerException {
+        try {
+            InputStream inputStream = new FileInputStream(new File(fileName));
 
-        InputStream inputStream = new FileInputStream(new File(fileName));
+            XQDataSource dataSource = new SaxonXQDataSource();
+            XQConnection connection = dataSource.getConnection();
+            LOG.info("Creating connection...");
+            XQPreparedExpression preparedExpression = connection.prepareExpression(inputStream);
+            inputStream.close();
 
-        XQDataSource dataSource = new SaxonXQDataSource();
-        XQConnection connection = dataSource.getConnection();
-        LOG.info("Creating connection...");
-        XQPreparedExpression preparedExpression = connection.prepareExpression(inputStream);
-        inputStream.close();
-
-        return preparedExpression;
+            return preparedExpression;
+        }
+        catch(Exception xqPreparedExpressionException){
+            LOG.error("Error in creating connection "+xqPreparedExpressionException);
+            throw new XMLPasrerException("Unable to prepare expression for file "+fileName);
+        }
     }
 }

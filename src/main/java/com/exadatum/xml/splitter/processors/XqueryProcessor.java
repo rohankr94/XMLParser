@@ -1,5 +1,6 @@
 package com.exadatum.xml.splitter.processors;
 
+import com.exadatum.xml.splitter.exceptions.XMLPasrerException;
 import com.exadatum.xml.splitter.utils.Constants;
 import com.exadatum.xml.splitter.utils.FileUtils;
 import com.exadatum.xml.splitter.utils.XQueryExecutor;
@@ -31,12 +32,11 @@ public class XqueryProcessor {
 
     /**
      *
-     *
      * @param outDir
      * @param xqueryFile
+     * @param batchId
      *
      * Constructor to initialise the variables in the class
-     *
      */
 
     public XqueryProcessor(String outDir, String xqueryFile,long batchId) {
@@ -62,19 +62,28 @@ public class XqueryProcessor {
      */
 
 
-    public void processXMLRecord(String xmlRecord, int surrogateKey) throws XQException, IOException {
-        XQPreparedExpression preparedExpression = new XQueryExecutor().newExpression(this.xqueryFile);
+    public void processXMLRecord(String xmlRecord, int surrogateKey) throws XMLPasrerException {
 
-        XQResultSequence resultSequence = FileUtils.getResult(xmlRecord, preparedExpression);
+        try {
 
-        List<String> singleRecord = FileUtils.getColumnsFromXMLRecord(resultSequence);
-        String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord);
-        this.recordList.add(record);
+            XQPreparedExpression preparedExpression = new XQueryExecutor().newExpression(this.xqueryFile);
 
-        if (this.recordList.size() == Constants.LIST_THRESHHOLD) {
-            LOG.info("Result set exceeded threshold, flushing result to disk.");
-            FileUtils.flushRecordsToFile(this.recordList, outDir, fileName);
-            this.recordList.clear();
+            XQResultSequence resultSequence = FileUtils.getResult(xmlRecord, preparedExpression);
+
+            List<String> singleRecord = FileUtils.getColumnsFromXMLRecord(resultSequence);
+            String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord);
+            LOG.info("Successfully appended the record set");
+            this.recordList.add(record);
+
+            if (this.recordList.size() == Constants.LIST_THRESHHOLD) {
+                LOG.info("Result set exceeded threshold, flushing result to disk.");
+                FileUtils.flushRecordsToFile(this.recordList, outDir, fileName);
+                this.recordList.clear();
+            }
+        }
+        catch(Exception processXmlException){
+            LOG.error("error in parsing record "+processXmlException);
+            throw new XMLPasrerException("unable to parse record" + xmlRecord);
         }
     }
 
@@ -87,12 +96,18 @@ public class XqueryProcessor {
      */
 
 
-    public void flushToFile() throws IOException {
-        if (this.recordList.isEmpty()) {
-            LOG.info("No records found.");
-            return;
+    public void flushToFile() throws XMLPasrerException {
+        try {
+            if (this.recordList.isEmpty()) {
+                LOG.info("No records found.");
+                return;
+            }
+            FileUtils.flushRecordsToFile(this.recordList, this.outDir, fileName);
         }
-        FileUtils.flushRecordsToFile(this.recordList, this.outDir, fileName);
+        catch(Exception flushToFileException){
+            LOG.error("error in flushing records "+flushToFileException);
+            throw new XMLPasrerException("Unable to flush records");
+        }
     }
 
 }
