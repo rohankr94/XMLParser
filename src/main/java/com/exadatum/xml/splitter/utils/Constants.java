@@ -10,5 +10,5 @@ public interface Constants {
     int LIST_THRESHHOLD = 1000000;
     String FILE_EXTENSTION = ".data";
     String SURROGATE_KEY_FILE = "-SurrogateKey.txt";
-    String FILE_SEPERATOR = "/";
+    String FILE_PATH_SEPERATOR = "/";
 }
