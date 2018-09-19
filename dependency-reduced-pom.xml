@@ -19,7 +19,7 @@
           <finalName>WorkScheduleProcessor</finalName>
           <archive>
             <manifest>
-              <mainClass>com.exadatum.xml.splitter.processors.WorkScheduleProcessor</mainClass>
+              <mainClass>com.exadatum.xml.splitter.processors.XMLProcessor</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -36,7 +36,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.exadatum.xml.splitter.processors.WorkScheduleProcessor</mainClass>
+                  <mainClass>com.exadatum.xml.splitter.processors.XMLProcessor</mainClass>
                 </transformer>
               </transformers>
               <filters>

@@ -6,7 +6,6 @@ import java.io.*;
  * gets and sets the surrogate key value.
  */
 
-
 public class SurrogateKeyGenerator {
 
     public static int surrogateKey = 0;
@@ -50,8 +49,7 @@ public class SurrogateKeyGenerator {
     }
 
     /**
-     * @param surrogateKey
-     * @param fileName     Writes the surrogate key value to the file.
+     *
      */
 
     public static void updateSurrogateKey() throws IOException {

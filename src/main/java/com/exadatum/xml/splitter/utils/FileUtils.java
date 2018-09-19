@@ -15,8 +15,7 @@ public interface FileUtils {
 
     /**
      * @param XMLEntry
-     * @param exp
-     * Executes the query
+     * @param exp      Executes the query
      */
 
     static XQResultSequence getResult(String XMLEntry, XQPreparedExpression exp) throws XQException, IOException {
@@ -28,7 +27,6 @@ public interface FileUtils {
     }
 
     /**
-     *
      * @param result
      * @return list
      * inserts the result of executed query in a list of string.
@@ -39,18 +37,19 @@ public interface FileUtils {
         while (result.next()) {
             String res;
             res = result.getItemAsString(null);
-            oneRecord.add(res);
+            if (res.equalsIgnoreCase("NULL"))
+                oneRecord.add("");
+            else
+                oneRecord.add(res);
         }
         return oneRecord;
     }
 
     /**
-     *
      * @param recordSet
      * @param OutDir
      * @param outFileName
-     * @param <T>
-     * dumps the output to a file
+     * @param <T>         dumps the output to a file
      */
 
     static <T> void flushRecordsToFile(List<T> recordSet, String OutDir, String outFileName) throws IOException {
@@ -74,16 +73,16 @@ public interface FileUtils {
         csvWriter.close();
     }
 
-    static void createDirectory(String dirName){
+    static void createDirectory(String dirName) {
 
         File outputDir = new File(dirName);
         outputDir.mkdirs();
 
     }
 
-    static String getFileName(String fileName){
+    static String getFileName(String fileName) {
         String[] outputFilePath = fileName.split(Constants.FILE_SEPERATOR);
-        String outputFile = outputFilePath[outputFilePath.length - 1].split(Pattern.quote("."))[0];
+        String outputFile = outputFilePath[outputFilePath.length - 1].split(Pattern.quote("."))[0].split("-")[0];
         return outputFile;
     }
 

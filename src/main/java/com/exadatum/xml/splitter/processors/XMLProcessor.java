@@ -44,9 +44,10 @@ public class XMLProcessor {
         Scanner s = new Scanner(new File(args[1]));
         SurrogateKeyGenerator.intitialize(xmlFile, outputDirectory);
         List<XqueryProcessor> xqueryProcessors = new ArrayList<>();
+        long batchId = System.currentTimeMillis();
         while (s.hasNextLine()) {
             String xqueryFile = s.nextLine();
-            XqueryProcessor xqueryProcessor = new XqueryProcessor(outputDirectory, xqueryFile);
+            XqueryProcessor xqueryProcessor = new XqueryProcessor(outputDirectory, xqueryFile, batchId);
             xqueryProcessors.add(xqueryProcessor);
         }
         processXMLRecords(xmlFile, xqueryProcessors, outputDirectory);
