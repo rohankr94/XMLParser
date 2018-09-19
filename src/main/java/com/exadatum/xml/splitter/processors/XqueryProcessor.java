@@ -3,6 +3,8 @@ package com.exadatum.xml.splitter.processors;
 import com.exadatum.xml.splitter.utils.Constants;
 import com.exadatum.xml.splitter.utils.FileUtils;
 import com.exadatum.xml.splitter.utils.XQueryExecutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQPreparedExpression;
@@ -18,6 +20,9 @@ import java.util.List;
  */
 
 public class XqueryProcessor {
+
+    private static final Logger LOG = LoggerFactory
+            .getLogger(XqueryProcessor.class);
 
     private String xqueryFile;
     private List<String> recordList;
@@ -66,6 +71,7 @@ public class XqueryProcessor {
         this.recordList.add(record);
 
         if (this.recordList.size() == Constants.LIST_THRESHHOLD) {
+            LOG.info("Result set exceeded threshold, flushing result to disk.");
             FileUtils.flushRecordsToFile(this.recordList, outDir, fileName);
             this.recordList.clear();
         }
@@ -81,8 +87,10 @@ public class XqueryProcessor {
 
 
     public void flushToFile() throws IOException {
-        if (this.recordList.isEmpty())
+        if (this.recordList.isEmpty()) {
+            LOG.info("No records found.");
             return;
+        }
         FileUtils.flushRecordsToFile(this.recordList, this.outDir, fileName);
     }
 

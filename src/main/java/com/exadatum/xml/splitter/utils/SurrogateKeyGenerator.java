@@ -12,7 +12,7 @@ public class SurrogateKeyGenerator {
     private static String filename;
 
 
-    public static void intitialize(String xmlFile, String outputDirectory) throws IOException {
+    public static void initialize(String xmlFile, String outputDirectory) throws IOException {
         String surrogatekeyFileName = FileUtils.getFileName(xmlFile);
         filename = outputDirectory + Constants.FILE_SEPERATOR + surrogatekeyFileName + Constants.SURROGATE_KEY_FILE;
         surrogateKey = getSurrogateKey(filename);
@@ -49,6 +49,8 @@ public class SurrogateKeyGenerator {
     }
 
     /**
+     *
+     * Updates the surrogate key value in the file.
      *
      */
 

@@ -1,6 +1,9 @@
 package com.exadatum.xml.splitter.utils;
 
+import com.exadatum.xml.splitter.processors.XMLProcessor;
 import com.opencsv.CSVWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.namespace.QName;
 import javax.xml.xquery.XQException;
@@ -13,6 +16,9 @@ import java.util.regex.Pattern;
 
 public interface FileUtils {
 
+    static final Logger LOG = LoggerFactory
+            .getLogger(FileUtils.class);
+
     /**
      * @param XMLEntry
      * @param exp      Executes the query
@@ -20,7 +26,7 @@ public interface FileUtils {
 
     static XQResultSequence getResult(String XMLEntry, XQPreparedExpression exp) throws XQException, IOException {
 
-
+        LOG.info("Executing query");
         exp.bindDocument(new QName("doc"), XMLEntry, null, null);
         XQResultSequence result = exp.executeQuery();
         return result;
@@ -33,6 +39,7 @@ public interface FileUtils {
      */
     static List<String> getColumnsFromXMLRecord(XQResultSequence result) throws XQException {
 
+        LOG.info("Getting results from XML using XQuery");
         List<String> oneRecord = new ArrayList<String>();
         while (result.next()) {
             String res;

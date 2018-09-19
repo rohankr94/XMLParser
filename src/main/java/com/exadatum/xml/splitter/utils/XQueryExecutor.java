@@ -1,6 +1,9 @@
 package com.exadatum.xml.splitter.utils;
 
+import com.exadatum.xml.splitter.processors.XqueryProcessor;
 import com.saxonica.xqj.SaxonXQDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.xquery.XQConnection;
 import javax.xml.xquery.XQDataSource;
@@ -12,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class XQueryExecutor {
+
+    private static final Logger LOG = LoggerFactory
+            .getLogger(XQueryExecutor.class);
 
     /**
      *
@@ -26,7 +32,7 @@ public class XQueryExecutor {
 
         XQDataSource dataSource = new SaxonXQDataSource();
         XQConnection connection = dataSource.getConnection();
-
+        LOG.info("Creating connection...");
         XQPreparedExpression preparedExpression = connection.prepareExpression(inputStream);
         inputStream.close();
 
