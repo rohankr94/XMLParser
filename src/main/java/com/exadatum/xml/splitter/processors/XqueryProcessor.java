@@ -39,12 +39,13 @@ public class XqueryProcessor {
      *
      */
 
-    public XqueryProcessor(String outDir, String xqueryFile) {
+    public XqueryProcessor(String outDir, String xqueryFile,long batchId) {
         this.xqueryFile = xqueryFile;
         this.recordList = new ArrayList<>();
         fileName = FileUtils.getFileName(xqueryFile);
-        FileUtils.createDirectory(outDir + Constants.FILE_PATH_SEPERATOR + fileName);
-        this.outDir = outDir + Constants.FILE_PATH_SEPERATOR + fileName;
+        FileUtils.createDirectory(outDir + Constants.FILE_PATH_SEPERATOR + fileName+Constants.FILE_PATH_SEPERATOR+batchId);
+        this.outDir = outDir + Constants.FILE_PATH_SEPERATOR + fileName+Constants.FILE_PATH_SEPERATOR+batchId;
+        fileName = fileName + Constants.FILE_EXTENSTION;
     }
 
 
