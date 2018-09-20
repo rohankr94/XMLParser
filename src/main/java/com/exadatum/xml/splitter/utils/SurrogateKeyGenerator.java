@@ -43,7 +43,7 @@ public class SurrogateKeyGenerator {
             surrogateKey = getSurrogateKey(filename);
         }
         catch(Exception initialisationException){
-            LOG.error("Error while initialising surrogate key "+initialisationException);
+            LOG.error("Error while initialising surrogate key ",initialisationException);
             throw new XMLPasrerException("Unable to initialize surrogate key for "+filename);
         }
     }
@@ -80,7 +80,7 @@ public class SurrogateKeyGenerator {
             return surrogateKey;
         }
         catch(Exception getSurrogateKeyException){
-            LOG.error("Error while fetching surrogate key "+getSurrogateKeyException);
+            LOG.error("Error while fetching surrogate key ",getSurrogateKeyException);
             throw new XMLPasrerException("Unable to get surrogate key from file "+fileName);
         }
     }
@@ -101,7 +101,7 @@ public class SurrogateKeyGenerator {
             bw.close();
         }
         catch(Exception updateSurrogateKeyException){
-            LOG.error("Error in updaing surrogate key "+updateSurrogateKeyException);
+            LOG.error("Error in updaing surrogate key ",updateSurrogateKeyException);
             throw new XMLPasrerException("Unable to update surrogate key to file "+filename);
         }
     }

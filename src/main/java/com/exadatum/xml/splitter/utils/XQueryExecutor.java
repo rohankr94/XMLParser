@@ -40,7 +40,7 @@ public class XQueryExecutor {
             return preparedExpression;
         }
         catch(Exception xqPreparedExpressionException){
-            LOG.error("Error in creating connection "+xqPreparedExpressionException);
+            LOG.error("Error in creating connection ",xqPreparedExpressionException);
             throw new XMLPasrerException("Unable to prepare expression for file "+fileName);
         }
     }

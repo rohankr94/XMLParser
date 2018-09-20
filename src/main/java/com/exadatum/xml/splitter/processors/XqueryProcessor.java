@@ -82,7 +82,7 @@ public class XqueryProcessor {
             }
         }
         catch(Exception processXmlException){
-            LOG.error("error in parsing record "+processXmlException);
+            LOG.error("error in parsing record ",processXmlException);
             throw new XMLPasrerException("unable to parse record" + xmlRecord);
         }
     }
@@ -105,7 +105,7 @@ public class XqueryProcessor {
             FileUtils.flushRecordsToFile(this.recordList, this.outDir, fileName);
         }
         catch(Exception flushToFileException){
-            LOG.error("error in flushing records "+flushToFileException);
+            LOG.error("error in flushing records ",flushToFileException);
             throw new XMLPasrerException("Unable to flush records");
         }
     }

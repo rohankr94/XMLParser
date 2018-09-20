@@ -92,7 +92,7 @@ public interface FileUtils {
             csvWriter.close();
         }
         catch(Exception flushRecordsToFileException){
-            LOG.error("Data dumping error "+flushRecordsToFileException);
+            LOG.error("Data dumping error ",flushRecordsToFileException);
             throw new XMLPasrerException("Unable to flush records to file "+outFileName);
         }
     }

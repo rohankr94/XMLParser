@@ -96,6 +96,7 @@ public class XMLProcessor {
             flushDataToFile(xqueryProcessors, outputDirectory);
             LOG.info("Successfully flushed  processed data to file ");
         } catch (Exception xmlParserException) {
+            LOG.error("Error while parsing records ",xmlParserException);
             throw new XMLPasrerException("unable to parse records " + xmlRecord);
         }
 
