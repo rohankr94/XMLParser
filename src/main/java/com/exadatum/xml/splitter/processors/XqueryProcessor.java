@@ -10,11 +10,10 @@ import javax.xml.xquery.XQResultSequence;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
- *
  * Processor class to process each xquery.
- *
  */
 
 public class XqueryProcessor {
@@ -25,13 +24,8 @@ public class XqueryProcessor {
     private String outDir;
 
     /**
-     *
-     *
      * @param outDir
-     * @param xqueryFile
-     *
-     * Constructor to initialise the variables in the class
-     *
+     * @param xqueryFile Constructor to initialise the variables in the class
      */
 
     public XqueryProcessor(String outDir, String xqueryFile) {
@@ -44,25 +38,25 @@ public class XqueryProcessor {
 
 
     /**
-     *
-     * @param xmlRecord
+     * @param records
      * @param surrogateKey
      * @throws XQException
-     * @throws IOException
-     *
-     * For each xquery file, result is appended to the string,
-     * and that string is added to the resultant list.
-     *
+     * @throws IOException For each xquery file, result is appended to the string,
+     *                     and that string is added to the resultant list.
      */
 
 
-    public void processXMLRecord(String xmlRecord, int surrogateKey) throws XQException, IOException {
+    public void processXMLRecord(String records, int surrogateKey) throws XQException, IOException {
+        String[] xmlRecords = records.split(Pattern.quote("|"));
+        String xmlRecord = xmlRecords[0];
+        String creationTimeForRecord = xmlRecords[1];
+
         XQPreparedExpression preparedExpression = new XQueryExecutor().newExpression(this.xqueryFile);
 
         XQResultSequence resultSequence = FileUtils.getResult(xmlRecord, preparedExpression);
 
         List<String> singleRecord = FileUtils.getColumnsFromXMLRecord(resultSequence);
-        String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord);
+        String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord) + Constants.FIELD_SEPERATOR + creationTimeForRecord;
         this.recordList.add(record);
 
         if (this.recordList.size() == Constants.LIST_THRESHHOLD) {
@@ -72,11 +66,7 @@ public class XqueryProcessor {
     }
 
     /**
-     *
-     * @throws IOException
-     *
-     * Dumps data to file once number of records exceeds a particular limit.
-     *
+     * @throws IOException Dumps data to file once number of records exceeds a particular limit.
      */
 
 

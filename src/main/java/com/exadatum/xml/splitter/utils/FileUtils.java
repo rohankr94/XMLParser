@@ -37,10 +37,7 @@ public interface FileUtils {
         while (result.next()) {
             String res;
             res = result.getItemAsString(null);
-            if (res.equalsIgnoreCase("NULL"))
-                oneRecord.add("");
-            else
-                oneRecord.add(res);
+            oneRecord.add(res);
         }
         return oneRecord;
     }

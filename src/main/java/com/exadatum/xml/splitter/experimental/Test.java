@@ -10,8 +10,9 @@ import java.util.Locale;
 public class Test {
     public static void main(String[] args) throws ParseException {
 
-        String str = "2016-07-31T10:00:00.000-06:00";
 
+
+        String str = "2016-07-31T10:00:00.000-06:00";
 
 
         try {

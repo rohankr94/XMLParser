@@ -9,7 +9,7 @@ then
 ( data($doc/EmployeeWorkSchedule_SK) )
 else ("NULL") ,
 
-if (exists($doc/SequenceNbr))
+if   (exists($doc/SequenceNbr))
 then
 ( data ($doc/SequenceNbr) )
 else ("NULL") ,
