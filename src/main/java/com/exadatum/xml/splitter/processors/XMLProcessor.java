@@ -1,91 +1,123 @@
 package com.exadatum.xml.splitter.processors;
 
 
-import com.exadatum.xml.splitter.utils.Constants;
-import com.exadatum.xml.splitter.utils.FileUtils;
+import com.exadatum.xml.splitter.exceptions.XMLPasrerException;
 import com.exadatum.xml.splitter.utils.SurrogateKeyGenerator;
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.xml.xquery.XQException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 /**
  * Processing of XML file using XQuery java api.
  */
 
 public class XMLProcessor {
 
+    private static final Logger LOG = LoggerFactory
+            .getLogger(XMLProcessor.class);
+
     /**
      * @param args - has xml file name,file path of xquery list,output directory
-     * @throws IOException
      */
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        BasicConfigurator.configure();
         try {
             new XMLProcessor().execute(args);
-        } catch (FileNotFoundException | XQException e) {
-            e.printStackTrace();
+        } catch (XMLPasrerException ex) {
+            LOG.error("unable ot process record ", ex);
         }
     }
+
 
     /**
      * @param args - has xml file name,file path of xquery list,output directory
-     * @throws XQException
-     * @throws IOException a list of XqueryProcessors class for each xquery file which is
-     *                     passed to processXMLRecords().
+     * @throws XMLPasrerException
+     *
+     * Takes each query file and adds it to {@link XqueryProcessor} list.
+     *
      */
 
-    private void execute(String[] args) throws XQException, IOException {
-        String xmlFile = args[0];
-        String outputDirectory = args[2];
-        Scanner s = new Scanner(new File(args[1]));
-        SurrogateKeyGenerator.intitialize(xmlFile, outputDirectory);
-        List<XqueryProcessor> xqueryProcessors = new ArrayList<>();
-        while (s.hasNextLine()) {
-            String xqueryFile = s.nextLine();
-            XqueryProcessor xqueryProcessor = new XqueryProcessor(outputDirectory, xqueryFile);
-            xqueryProcessors.add(xqueryProcessor);
+    private void execute(String[] args) throws XMLPasrerException {
+        try {
+            LOG.info("initializing properties");
+            String xmlFile = args[0];
+            String outputDirectory = args[2];
+            Scanner s = new Scanner(new File(args[1]));
+            SurrogateKeyGenerator.initialize(xmlFile, outputDirectory);
+            List<XqueryProcessor> xqueryProcessors = new ArrayList<>();
+            long batchId = System.currentTimeMillis();
+            while (s.hasNextLine()) {
+                String xqueryFile = s.nextLine();
+                XqueryProcessor xqueryProcessor = new XqueryProcessor(outputDirectory, xqueryFile, batchId);
+                xqueryProcessors.add(xqueryProcessor);
+            }
+            processXMLRecords(xmlFile, xqueryProcessors, outputDirectory);
+            SurrogateKeyGenerator.updateSurrogateKey();
+        } catch (Exception ex) {
+            LOG.error("unable to process record ", ex);
+            throw new XMLPasrerException("unable to parse file " + args);
+
         }
-        processXMLRecords(xmlFile, xqueryProcessors, outputDirectory);
-        SurrogateKeyGenerator.updateSurrogateKey();
     }
 
     /**
+     *
      * @param xmlFile
      * @param xqueryProcessors
      * @param outputDirectory
-     * @throws IOException
-     * @throws XQException For each element in XqueryProcessor list, query is executed and and dumped to its corresponding file.
+     * @throws XMLPasrerException
+     *
+     * for each query file in {@link XqueryProcessor} list query is executed and data is dumped.
+     *
      */
 
-    private void processXMLRecords(String xmlFile, List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws IOException, XQException {
+    private void processXMLRecords(String xmlFile, List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws XMLPasrerException {
 
-        File xmlSourceFile = new File(xmlFile);
-        BufferedReader br = new BufferedReader(new FileReader(xmlSourceFile));
-        String xmlRecord;
-        while ((xmlRecord = br.readLine()) != null) {
-            SurrogateKeyGenerator.surrogateKey++;
-            for (XqueryProcessor xqueryProcessor : xqueryProcessors) {
-                xqueryProcessor.processXMLRecord(xmlRecord, SurrogateKeyGenerator.surrogateKey);
+        String xmlRecord = "";
+        try {
+            File xmlSourceFile = new File(xmlFile);
+            BufferedReader br = new BufferedReader(new FileReader(xmlSourceFile));
+            LOG.info("Fetching records from XML ");
+            while ((xmlRecord = br.readLine()) != null) {
+                SurrogateKeyGenerator.surrogateKey++;
+                LOG.debug("surrogate key generated : " + SurrogateKeyGenerator.surrogateKey);
+                for (XqueryProcessor xqueryProcessor : xqueryProcessors) {
+                    xqueryProcessor.processXMLRecord(xmlRecord, SurrogateKeyGenerator.surrogateKey);
+                }
             }
+            LOG.info("flushing processed data to file ");
+
+            flushDataToFile(xqueryProcessors, outputDirectory);
+            LOG.info("Successfully flushed  processed data to file ");
+        } catch (Exception xmlParserException) {
+            LOG.error("Error while parsing records ",xmlParserException);
+            throw new XMLPasrerException("unable to parse records " + xmlRecord);
         }
-        flushDataToFile(xqueryProcessors, outputDirectory);
 
     }
 
     /**
      * @param xqueryProcessors
      * @param outputDirectory
-     * @throws IOException this function dumps the data to the file.
+     * @throws XMLPasrerException
+     * this function dumps the data to the file.
      */
 
-    private void flushDataToFile(List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws IOException {
-
-        for (XqueryProcessor xqueryProcessor : xqueryProcessors) {
-            xqueryProcessor.flushToFile();
+    private void flushDataToFile(List<XqueryProcessor> xqueryProcessors, String outputDirectory) throws XMLPasrerException {
+        try {
+            LOG.info("Flushing the result to output file");
+            for (XqueryProcessor xqueryProcessor : xqueryProcessors) {
+                xqueryProcessor.flushToFile();
+            }
+        } catch (Exception ex) {
+            LOG.error("unable to flush data to file ", ex);
+            throw new XMLPasrerException("not able to flush data to file");
         }
     }
 
