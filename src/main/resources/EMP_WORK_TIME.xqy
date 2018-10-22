@@ -6,17 +6,17 @@ return
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='AlternateDocumentID']))
         then
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='AlternateDocumentID']))
-        else("NULL")
+        else("")
         ,
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='CreationDt']))
         then
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='CreationDt']))
-        else("NULL")
+        else("")
     ,
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='InternalFileTransferInd']))
         then
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='InternalFileTransferInd']))
-        else("NULL")
+        else("")
 
         ,
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='DocumentAction']//*[local-name()='ActionTypeCd']))
@@ -265,6 +265,7 @@ return
         else("NULL")
 
         ,
+
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='JobCd']))
         then
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='JobCd']))
@@ -370,6 +371,39 @@ return
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekStart']//*[local-name()='WorkWeekStartDt']))
         then
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkWeek']//*[local-name()='WorkWeekStart']//*[local-name()='WorkWeekStartDt']))
+        else("NULL")
+        ,
+
+        if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='Employee']//*[local-name()='HourTypeDsc']))
+        then
+            ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='Employee']//*[local-name()='HourTypeDsc']))
+        else("NULL")
+
+        ,
+        if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='Employee']//*[local-name()='HourTypeId']))
+        then
+            ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='Employee']//*[local-name()='HourTypeId']))
+        else("NULL")
+        ,
+
+        if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='ProjectDsc']))
+        then
+            ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='ProjectDsc']))
+        else("NULL")
+        ,
+        if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='ProjectId']))
+        then
+            ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='ProjectId']))
+        else("NULL")
+        ,
+        if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='TimeCodeDsc']))
+        then
+            ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='TimeCodeDsc']))
+        else("NULL")
+        ,
+        if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='TimeCodeId']))
+        then
+            ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='WorkTimeData']//*[local-name()='WorkTime']//*[local-name()='TimeCodeId']))
         else("NULL")
 
     )

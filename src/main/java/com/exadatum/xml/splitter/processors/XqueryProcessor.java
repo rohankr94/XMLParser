@@ -11,7 +11,9 @@ import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,7 +73,9 @@ public class XqueryProcessor {
             XQResultSequence resultSequence = FileUtils.getResult(xmlRecord, preparedExpression);
 
             List<String> singleRecord = FileUtils.getColumnsFromXMLRecord(resultSequence);
-            String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.S aa");
+            String creationTimeForRecord = dateFormat.format(new Date());
+            String record = String.valueOf(surrogateKey) + Constants.FIELD_SEPERATOR + String.join(Constants.FIELD_SEPERATOR, singleRecord) + Constants.FIELD_SEPERATOR + creationTimeForRecord;
             LOG.info("Successfully appended the record set");
             this.recordList.add(record);
 
