@@ -8,11 +8,13 @@ return
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='AlternateDocumentID']))
         else("")
         ,
+
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='CreationDt']))
         then
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='CreationDt']))
         else("")
     ,
+
         if (exists($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='InternalFileTransferInd']))
         then
             ( data($doc//*[local-name()='GetEmployeeWorkTime']//*[local-name()='DocumentData']//*[local-name()='Document']//*[local-name()='InternalFileTransferInd']))

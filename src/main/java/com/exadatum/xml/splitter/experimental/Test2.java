@@ -90,11 +90,7 @@ public class Test2 {
 
     public static void main(String[] args) {
         List<String> columnList=new ArrayList<>();
-
-
-
-
-
+        
         columnList.add("AlternateDocumentID");
         columnList.add("CreationDt");
         columnList.add("InternalFileTransferInd");
