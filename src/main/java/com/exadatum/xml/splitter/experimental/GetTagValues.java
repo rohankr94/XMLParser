@@ -1,29 +1,36 @@
 package com.exadatum.xml.splitter.experimental;
 
-import javax.xml.*;
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
-import org.w3c.dom.*;
-import java.io.*;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
-import org.xml.sax.InputSource;
+import java.io.File;
+        import javax.xml.parsers.DocumentBuilder;
+        import javax.xml.parsers.DocumentBuilderFactory;
 
-public class GetTagValues
-{
-    public static void main(String[] args) throws Exception
-    {
+        import org.w3c.dom.Document;
+        import org.w3c.dom.Element;
+        import org.w3c.dom.Node;
+        import org.w3c.dom.NodeList;
 
+public class GetTagValues {
 
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document document = (Document) db.parse(new File("/home/exa00083/Projects/Albertsons/ShipSchemaCMM/Nouns/EmployeeWorkTime.xsd"));
-        Node node = ((Document) document).getFirstChild();
-        String custName= node.getAttributes()
-                .getNamedItem("name")
-                .getNodeValue();
-        System.out.println(custName);
+    public static void main(String args[]) throws Exception {
+        File stocks = new File("/home/exa00083/Projects/Albertsons/ShipSchemaCMM/Nouns/EmployeeWorkTime.xsd");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(stocks);
+        doc.getDocumentElement().normalize();
+
+        System.out.println(doc.getDocumentElement().getNodeName());
+        NodeList nodes = doc.getElementsByTagName("schema");
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+                Element element = (Element) node;
+                System.out.println("Stock Symbol: " + getValue("include", element));
+
+        }
+    }
+    static String getValue(String tag, Element element) {
+        NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();
+        Node node = (Node) nodes.item(0);
+        return node.getNodeValue();
     }
 }
